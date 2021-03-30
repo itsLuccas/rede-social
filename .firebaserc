@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "rede-social-81f87": {
+      "hosting": {
+        "app": [
+          "rede-social-81f87"
+        ]
+      }
+    }
+  }
+}

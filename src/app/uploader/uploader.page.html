@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>uploader</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="center">
+    <div class="camera">
+      <p>camera espace, still needs to be implemented!</p>
+    </div>
+
+
+    <input type="file" *ngIf="!imageURL" (change)="fileChanged($event)" class="filebtn" #fileButton/>
+
+    <ion-button shape="round" color="primary" (click)="uploadFile()" *ngIf="!imageURL" fill="outline"> Upload File </ion-button>
+
+    <ion-card *ngIf="imageURL">
+      <img src="https://ucarecdn.com/{{imageURL}}/"/>
+      <ion-card-content>
+        <ion-textarea aria-placeholder="digita alguma coisa ai" [(ngModel)] = "desc"></ion-textarea>
+        <ion-button (click)="postar()">POST</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

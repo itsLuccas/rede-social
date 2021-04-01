@@ -5,5 +5,13 @@
 </ion-header>
 
 <ion-content>
-
+    <div id="images">
+        <div class="image" *ngFor="let user of ((allUsers | async))">
+          <ion-card>  
+            <p *ngIf="user.posts">User: {{ user.username }}</p>             
+            <ion-img *ngIf="user.posts" src="https://ucarecdn.com/{{ user.posts[user.posts.length-1].imagem }}/-/crop/200x200/center/"></ion-img>
+            <p *ngIf="user.posts">{{ user.posts[user.posts.length-1].desc }}</p>
+        </ion-card>
+        </div>
+      </div>      
 </ion-content>

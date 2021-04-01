@@ -17,7 +17,7 @@ export class ProfilePage implements OnInit {
 
   constructor(private afStore: AngularFirestore, private user: UserService) {
     // pegando os posts do usuário logado!
-    const posts = afStore.doc(`users/${this.user.getUID()}`);
+    const posts = afStore.doc(`users/${this.user.getUID()}`);    
     // é um observador, serve para pegar as alterações de posts quando um novo post é realizado, por isso o valueChanges()
     // retorna o doc "posts" do usuário
     this.userPosts = posts.valueChanges();

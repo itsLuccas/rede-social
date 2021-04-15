@@ -59,6 +59,7 @@ export class UploaderPage implements OnInit {
     }, {merge: true});
 
     this.showAlert('ta ok ai?', 'teu post foi realizado com sucesso meu querido');
+    this.imageURL = null;
   }
 
   uploadFile() {

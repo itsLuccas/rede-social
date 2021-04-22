@@ -1,13 +1,74 @@
-.image {
-    margin-top: 10px;
-}
-
 #avatar {    
     width:100% !important;  
     height : 100% !important;  
-    max-width: 50px !important;  //any size
-    max-height: 50px !important; //any size
+    max-width: 40px !important;  //any size
+    max-height: 40px !important; //any size
+}
+
+.user-desc {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#ellipsis {
+    margin-left: 240px;
 }
 
 
+.username { 
+    position: absolute;
+    font-weight: bolder;
+}
+
+.post-date {
+    position: absolute;
+    margin-top: 20px;
+    font-weight: lighter;
+    font-size: 0.7em;
+}
+
+#globe {
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 130px; 
+    font-size: 0.7em;   
+}
+
+.reactions {
+    margin-top: 5px;
+    margin-bottom: 5px;    
+    width:100% !important;  
+    height : 100% !important;  
+    max-width: 15px !important;  //any size
+    max-height: 15px !important; //any size
+}
+
+.reactions-data {
+    margin-top: 5px;
+    margin-bottom: 5px;  
+}
+
+#first-reaction {    
+    margin-left: 10px;
+    background-color: #4267B2;
+}
+
+.hr {
+    border: 0;
+    clear:both;
+    display:block;
+    width: 96%;               
+    background-color: gray;
+    height: 1px;
+}
+
+.button-reaction-comment {
+    width: auto;
+}
+
+.like-subtitle {
+    padding-top: 5px;
+    margin-left: 10px;
+    color: grey;
+}
 

@@ -17,6 +17,8 @@ import { firestore } from 'firebase/app'
 
 // Importando as configurações para se executar um alerta!
 import { AlertController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
+import {formatDate} from '@angular/common';
 
 
 
@@ -35,7 +37,7 @@ export class UploaderPage implements OnInit {
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;
 
-  constructor(public http: HttpClient, public afStore: AngularFirestore, public user: UserService, public alert: AlertController) { }
+  constructor(public http: HttpClient, public afStore: AngularFirestore, public user: UserService, public alert: AlertController, public datePipe: DatePipe) { }
 
   ngOnInit() {
   }
@@ -43,6 +45,9 @@ export class UploaderPage implements OnInit {
   postar() {
     // armazena a URL da imagem que teve seu upload feito no uploadcare
     const imagem = this.imageURL;
+    
+    const date = this.datePipe.transform(new Date(), 'medium');
+
     // armazena a descrição feita no post
     let desc = this.desc;
     if(!desc) {
@@ -54,7 +59,8 @@ export class UploaderPage implements OnInit {
     this.afStore.doc(`users/${this.user.getUID()}`).set({
       posts: firestore.FieldValue.arrayUnion({
         imagem, 
-        desc
+        desc,
+        date
       })
     }, {merge: true});
 

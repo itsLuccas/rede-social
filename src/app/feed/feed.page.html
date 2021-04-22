@@ -8,21 +8,76 @@
     <div id="images">
         <div class="image" *ngFor="let user of ((allUsers | async))">
           <ion-card>
+
               <ion-grid>
+
                   <ion-row>
                       <ion-col size="2">
                         <ion-avatar id="avatar">
                             <img src="https://ucarecdn.com/{{ user.posts[user.posts.length-1].imagem }}/-/crop/200x200/center/">
                         </ion-avatar>
                       </ion-col>
-                      <ion-col  size="10">
-                        <p *ngIf="user.posts">{{ user.username }}</p> 
+
+                      <ion-col  >
+                        <ion-row>
+                          <p *ngIf="user.posts" class="username"> {{ user.username }} </p> 
+                          <ion-icon id="ellipsis" name="ellipsis-horizontal-sharp"></ion-icon>
+                        </ion-row> 
+
+                        <ion-row>                          
+                          <p *ngIf="user.posts[user.posts.length-1].date" class="post-date">{{ user.posts[user.posts.length-1].date }}</p>
+                          <ion-icon id="globe" name="planet-outline"></ion-icon> 
+                        </ion-row> 
                       </ion-col>
-                  </ion-row>
-              </ion-grid> 
-            <ion-img *ngIf="user.posts" src="https://ucarecdn.com/{{ user.posts[user.posts.length-1].imagem }}/-/crop/200x200/center/"></ion-img>
-            <p *ngIf="user.posts">{{ user.posts[user.posts.length-1].desc }}</p>
-        </ion-card>
+
+                  </ion-row>   
+                </ion-grid>
+
+              <hr class="hr"> 
+              <div class="user-desc">
+                <p *ngIf="user.posts" >{{ user.posts[user.posts.length-1].desc }}</p>
+              </div>
+            <ion-img *ngIf="user.posts" src="https://ucarecdn.com/{{ user.posts[user.posts.length-1].imagem }}/-/resize/400x/"></ion-img>
+            <ion-row>
+
+              <ion-col size="1">
+                <ion-avatar class="reactions" id="first-reaction">
+                  <img src="https://img.icons8.com/cotton/64/ffffff/thumb-up--v1.png"/>
+                </ion-avatar>
+              </ion-col>
+
+              <ion-col size="1">
+                <ion-avatar class="reactions">
+                  <img src="https://img.icons8.com/cotton/64/ffffff/smiling-face-with-hearts-icon.png"/>
+                </ion-avatar>                
+              </ion-col>  
+                
+              <ion-col size="6">
+                <p class="reactions-data">3 reacts</p>              
+              </ion-col>  
+
+              <ion-col size="4">
+                <p class="reactions-data">5 comments</p>              
+              </ion-col>  
+
+            </ion-row> 
+            <hr class="hr"> 
+
+            <ion-row>
+              <ion-col size="6">
+                <ion-button class="button-reaction-comment" expand="block" fill="clear">
+                  <img src="https://img.icons8.com/cotton/25/ffffff/thumb-up--v1.png"/> 
+                  <p class="like-subtitle">like</p>
+                </ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button class="button-reaction-comment" expand="block" fill="clear">
+                  <img src="https://img.icons8.com/office/20/ffffff/comments.png"/>
+                  <p class="like-subtitle">comment</p>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card>
         </div>
       </div>      
 </ion-content>

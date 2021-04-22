@@ -23,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http'
 // Importanto a definição da classe do usuário como um "provedor"
 import { UserService } from './user.service';
 import { from } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -45,7 +46,7 @@ import { from } from 'rxjs';
     // Inicializando o módulo do http
     HttpClientModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, UserService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, UserService, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

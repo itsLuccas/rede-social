@@ -1,15 +1,88 @@
+<!-- cabeçalho -->
 <ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>profile</ion-title>
+        <ion-buttons slot="end">
+            <ion-button>
+                <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+            </ion-button>
+            <ion-menu-button slot="icon-only" name="menu-outline"></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <div id="images">
-    <div class="image" *ngFor="let post of ((userPosts | async)?.posts)">
-      <ion-card>
-        <ion-img src="https://ucarecdn.com/{{ post.imagem }}/-/crop/200x200/center/"></ion-img>
-      </ion-card>      
+
+<ion-content id="profile" padding>
+    <ion-row>
+        <ion-col>
+            <ion-avatar class="profile-avatar">
+                <img src="https://randomuser.me/api/portraits/women/20.jpg" />
+            </ion-avatar>
+        </ion-col>
+        <ion-col class="ion-text-center">
+            <h4>500</h4>
+            <p class="info-profile">Publicações</p>
+        </ion-col>
+        <ion-col class="ion-text-center">
+            <h4>500</h4>
+            <p class="info-profile">Amigos</p>
+        </ion-col>
+    </ion-row>
+
+    <div id="bibliografia" class="ion-padding-start">
+        <b>linda da silvah</b>
+        <p class="ion-no-margin">eu sou linda e muito hidratadah, é sobre isso</p>
     </div>
-  </div>
+
+    <hr class="hr">
+
+    <ion-row>
+        <ion-col>
+            <img src="https://img.icons8.com/dusk/50/000000/soda-water.png" />
+        </ion-col>
+        <ion-col>
+            <img src="https://img.icons8.com/doodle/48/000000/water-resources-of-the-earth.png" />
+        </ion-col>
+        <ion-col>
+            <img src="https://img.icons8.com/color/50/000000/water.png" />
+        </ion-col>
+    </ion-row>
+
+    <hr class="hr">
+
+    <div id="images">
+        <div class="image" *ngFor="let post of ((userPosts | async)?.posts)">
+            <ion-card>
+                <ion-img src="https://ucarecdn.com/{{ post.imagem }}/-/crop/200x200/center/"></ion-img>
+            </ion-card>
+        </div>
+    </div>
 </ion-content>
+
+
+<ion-menu contentId="profile" menuId="profile-menu" side="end">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>profile</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <!-- menu com itens -->
+    <ion-content>
+        <ion-list>
+            <ion-item>
+                <ion-icon name="podium-outline"></ion-icon>
+                <ion-label class="ion-padding-start">Sua atividade</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-icon name="settings-outline"></ion-icon>
+                <ion-label class="ion-padding-start">Configurações</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-icon name="log-out-outline"></ion-icon>
+                <ion-label class="ion-padding-start">Sair</ion-label>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+</ion-menu>

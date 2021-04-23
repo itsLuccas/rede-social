@@ -42,9 +42,13 @@ export class LoginPage implements OnInit {
       if(res.user) {
         this.user.setUser({
           username,
-          uid: res.user.uid          
+          uid: res.user.uid                   
         })
 
+        //Armazenando no local storage o id, para caso exista um refresh da página!
+        window.localStorage.removeItem('id'); 
+        window.localStorage.setItem('id', res.user.uid); 
+        
         
         // Depois do login, fazemos o roteamento para a página principal 
         this.router.navigate(['/tabs']);

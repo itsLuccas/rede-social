@@ -6,7 +6,7 @@
 
 <ion-content>
     <div id="images">
-        <div class="image" *ngFor="let user of ((allUsers | async))">
+        <div class="image" *ngFor="let user of ((allUsers | async)); let i = index">
           <ion-card>
 
               <ion-grid>
@@ -18,16 +18,13 @@
                         </ion-avatar>
                       </ion-col>
 
-                      <ion-col  >
-                        <ion-row>
-                          <p *ngIf="user.posts" class="username"> {{ user.username }} </p> 
+                      <ion-col>                          
                           <ion-icon id="ellipsis" name="ellipsis-horizontal-sharp"></ion-icon>
-                        </ion-row> 
+                          <p *ngIf="user.posts" class="username"> {{ user.username }} </p> 
 
-                        <ion-row>                          
-                          <p *ngIf="user.posts[user.posts.length-1].date" class="post-date">{{ user.posts[user.posts.length-1].date }}</p>
-                          <ion-icon id="globe" name="planet-outline"></ion-icon> 
-                        </ion-row> 
+                                                 
+                          <p *ngIf="user.posts[user.posts.length-1].date" class="post-date">{{ user.posts[user.posts.length-1].date }} •</p>
+                          <ion-icon id="globe" name="planet-outline"></ion-icon>                          
                       </ion-col>
 
                   </ion-row>   
@@ -53,11 +50,11 @@
               </ion-col>  
                 
               <ion-col size="6">
-                <p class="reactions-data">3 reacts</p>              
+                <p class="reactions-data">{{i + 1}} reacts</p>              
               </ion-col>  
 
               <ion-col size="4">
-                <p class="reactions-data">5 comments</p>              
+                <p class="reactions-data">{{i * 2 + 1}} comments</p>              
               </ion-col>  
 
             </ion-row> 

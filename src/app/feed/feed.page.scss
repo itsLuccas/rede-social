@@ -11,12 +11,14 @@
 }
 
 #ellipsis {
+    position: absolute;
     margin-left: 240px;
 }
 
 
 .username { 
     position: absolute;
+    margin-top: 4px;
     font-weight: bolder;
 }
 
@@ -30,7 +32,7 @@
 #globe {
     position: absolute;
     margin-top: 20px;
-    margin-left: 130px; 
+    margin-left: 120px; 
     font-size: 0.7em;   
 }
 

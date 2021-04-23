@@ -56,7 +56,7 @@ export class UploaderPage implements OnInit {
     
     // acessamos o documento armazenado no banco de dados a partir do id do usuário atual e...
     // ...realizamos o update do doc com as informações de url e descrição
-    this.afStore.doc(`users/${this.user.getUID()}`).set({
+    this.afStore.doc(`users/${window.localStorage.getItem('id')}`).set({
       posts: firestore.FieldValue.arrayUnion({
         imagem, 
         desc,

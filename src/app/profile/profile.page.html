@@ -1,34 +1,32 @@
 <!-- cabeçalho -->
 <ion-header>
     <ion-toolbar>
-        <ion-title>profile</ion-title>
+        <ion-title style="font-weight: bold; font-size: 20px;">linda.silva</ion-title>
         <ion-buttons slot="end">
-            <ion-button>
-                <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
-            </ion-button>
             <ion-menu-button slot="icon-only" name="menu-outline"></ion-menu-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
-
+<!-- informações -->
 <ion-content id="profile" padding>
     <ion-row>
-        <ion-col>
+        <ion-col style="text-align: -webkit-center;">
             <ion-avatar class="profile-avatar">
                 <img src="https://randomuser.me/api/portraits/women/20.jpg" />
             </ion-avatar>
         </ion-col>
         <ion-col class="ion-text-center">
-            <h4>500</h4>
+            <h4 style=" margin-bottom: 2px;">30</h4>
             <p class="info-profile">Publicações</p>
         </ion-col>
         <ion-col class="ion-text-center">
-            <h4>500</h4>
+            <h4 style=" margin-bottom: 2px;">100</h4>
             <p class="info-profile">Amigos</p>
         </ion-col>
     </ion-row>
 
+    <!-- bibliografia -->
     <div id="bibliografia" class="ion-padding-start">
         <b>linda da silvah</b>
         <p class="ion-no-margin">eu sou linda e muito hidratadah, é sobre isso</p>
@@ -36,20 +34,19 @@
 
     <hr class="hr">
 
-    <ion-row>
-        <ion-col>
-            <img src="https://img.icons8.com/dusk/50/000000/soda-water.png" />
-        </ion-col>
-        <ion-col>
-            <img src="https://img.icons8.com/doodle/48/000000/water-resources-of-the-earth.png" />
-        </ion-col>
-        <ion-col>
-            <img src="https://img.icons8.com/color/50/000000/water.png" />
-        </ion-col>
-    </ion-row>
+    <!-- conquistas -->
+    <b class="ion-margin-start" style="margin-bottom: 0px;">Conquistas</b>
+    <div id="conquest">
+        <img src="https://img.icons8.com/clouds/50/000000/water.png" />
+        <img src="https://img.icons8.com/clouds/50/000000/drink-time.png" />
+        <img src="https://img.icons8.com/clouds/50/000000/water-cooler.png" />
+        <img src="https://img.icons8.com/clouds/50/000000/kawaii-soda.png" />
+        <img src="https://img.icons8.com/bubbles/50/000000/water.png" />
+    </div>
 
-    <hr class="hr">
+    <hr style="margin-top: 0px;" class="hr">
 
+    <!-- publicações -->
     <div id="images">
         <div class="image" *ngFor="let post of ((userPosts | async)?.posts)">
             <ion-card>

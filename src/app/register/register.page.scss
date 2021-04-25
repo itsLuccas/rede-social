@@ -1,0 +1,23 @@
+.body {display: flex;
+    flex-direction: column ;
+    align-items: center; 
+    justify-content: space-around;
+    height: 70vh; margin: 20px 0px; 
+    box-sizing: border-box;}
+
+.titulo {font-size: 24px !important;}
+
+.bcolor {
+    //background: #c5ecf6 !important;
+    height:45px ; 
+    width: 140px; 
+    color: black;}
+
+.b2color{ 
+    height: 30px ; 
+    width: 110px; 
+    color: black;}
+
+//.button-native {background: #c5ecf6 !important;}
+
+//.bcolor:nth-child(1) {margin-top: 20px;}

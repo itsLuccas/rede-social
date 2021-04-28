@@ -66,6 +66,10 @@ export class RegisterPage implements OnInit {
         })
       }
       
+      //Armazenando no local storage o id, para caso exista um refresh da página!
+      window.localStorage.removeItem('id'); 
+      window.localStorage.setItem('id', res.user.uid); 
+
       //Mostrando um alerta de sucesso!
       this.showAlert("Success", "Your account has been created!");
 

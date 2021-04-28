@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Register</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -16,12 +19,26 @@
       <ion-input type="password" [(ngModel)]="password"></ion-input>
     </ion-item>
 
+
     <ion-item>
       <ion-label position="floating">Confirm password</ion-label>
       <ion-input type="password" [(ngModel)]="cpassword"></ion-input>
     </ion-item>
 
+
+    <ion-row>
+      <ion-col size="11" class="ion-no-margin">
+        <ion-item>
+          <ion-label position="floating">Weight (Kg)</ion-label>
+          <ion-input type="number"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="1">
+        <ion-icon name="help-circle-outline" (click)="showAlert('Por que precisamos do seu peso?', 'Para saber a quantidade de água exata que você precisa tomar por dia, a primeira coisa a se fazer é analisar o seu peso. O cálculo a ser feito é de 35 ml de água multiplicado pelo peso corporal de cada um. Então vamos levar em consideração uma pessoa que pese 60 kg e não sabe quanta água ela precisa tomar por dia. A conta seria a seguinte: 60 x 0,035 = 2,1l')"></ion-icon>
+      </ion-col>      
+    </ion-row>
+    
+
     <ion-button expand="block" (click)="signup()" class="bcolor" >Signup</ion-button>
-    <ion-button expand="block" (click)="back()"> <ion-icon name="arrow-back" class="b2color" ></ion-icon></ion-button>
   </ion-list>
 </ion-content>

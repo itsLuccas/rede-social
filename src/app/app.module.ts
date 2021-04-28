@@ -31,9 +31,11 @@ import { DatePipe } from '@angular/common';
 
 
 
+
+
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [], 
+
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 

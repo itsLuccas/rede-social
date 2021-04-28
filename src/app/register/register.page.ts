@@ -15,6 +15,8 @@ import { UserService } from '../user.service';
 //Importando o serviço de armazenamento do firestore!
 import { AngularFirestore } from '@angular/fire/firestore'
 
+import { ModalController } from '@ionic/angular';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -33,7 +35,7 @@ export class RegisterPage implements OnInit {
     public alert: AlertController,
     public router: Router,
     public user: UserService,
-    public afStore: AngularFirestore // essa variável permite o uso do angular firestore 
+    public afStore: AngularFirestore, // essa variável permite o uso do angular firestore 
     ) { }
 
   ngOnInit() {
@@ -80,13 +82,10 @@ export class RegisterPage implements OnInit {
     const alert = await this.alert.create({
       header, 
       message, 
-      buttons: ['ok']
+      buttons: ['ok'],
+      cssClass: 'foo',
     }) 
     await alert.present()
-  }
-
-  back() {
-    this.router.navigate(['login']);
   }
 
 }

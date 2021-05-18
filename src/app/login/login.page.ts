@@ -9,6 +9,9 @@ import { UserService } from '../user.service';
 // Importando o serviço de roteamento do próprio angular
 import { Router } from '@angular/router';
 
+import { Storage } from '@ionic/storage';
+
+
 
 
 @Component({
@@ -24,9 +27,10 @@ export class LoginPage implements OnInit {
   password: string = ""
 
   // instânciando o usuário no construtor, assim como os recursos do firebase
-  constructor(public afAuth: AngularFireAuth, public user: UserService, public router: Router) { }
+  constructor(public afAuth: AngularFireAuth, public user: UserService, public router: Router, private storage: Storage) {}
 
   ngOnInit() {
+    
   }
 
   // Preciso descobrir o que significa esse assíncrono!!!!
@@ -46,12 +50,13 @@ export class LoginPage implements OnInit {
         })
 
         //Armazenando no local storage o id, para caso exista um refresh da página!
-        window.localStorage.removeItem('id'); 
-        window.localStorage.setItem('id', res.user.uid); 
+        this.storage.set('id', res.user.uid);
+        //window.localStorage.removeItem('id'); 
+        //window.localStorage.setItem('id', res.user.uid); 
         
         
         // Depois do login, fazemos o roteamento para a página principal 
-        this.router.navigate(['/tabs']);
+        this.router.navigate(['/tabs/feed']);        
       }
       
     } catch(err) {

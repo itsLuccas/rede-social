@@ -18,7 +18,10 @@ import { firestore } from 'firebase/app'
 // Importando as configurações para se executar um alerta!
 import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
-import {formatDate} from '@angular/common';
+
+import { Storage } from '@ionic/storage';
+
+
 
 
 
@@ -37,12 +40,12 @@ export class UploaderPage implements OnInit {
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;
 
-  constructor(public http: HttpClient, public afStore: AngularFirestore, public user: UserService, public alert: AlertController, public datePipe: DatePipe) { }
+  constructor(private storage: Storage, public http: HttpClient, public afStore: AngularFirestore, public user: UserService, public alert: AlertController, public datePipe: DatePipe) { }
 
-  ngOnInit() {
+  ngOnInit() {   
   }
 
-  postar() {
+  async postar() {
     // armazena a URL da imagem que teve seu upload feito no uploadcare
     const imagem = this.imageURL;
     
@@ -55,8 +58,8 @@ export class UploaderPage implements OnInit {
     }      
     
     // acessamos o documento armazenado no banco de dados a partir do id do usuário atual e...
-    // ...realizamos o update do doc com as informações de url e descrição
-    this.afStore.doc(`users/${window.localStorage.getItem('id')}`).set({
+    // ...realizamos o update do doc com as informações de url e descrição    
+    this.afStore.doc(`users/${await this.storage.get('id')}`).set({
       posts: firestore.FieldValue.arrayUnion({
         imagem, 
         desc,
@@ -73,9 +76,8 @@ export class UploaderPage implements OnInit {
   }
 
   fileChanged(event) {
-    const files = event.target.files;
+    const files = event.target.files;   
     
-
     // Criando uma estrutura de dados para publicar na API do uploadcare!
     const data = new FormData();
     data.append('file', files[0]);

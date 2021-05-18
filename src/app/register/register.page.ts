@@ -17,6 +17,10 @@ import { AngularFirestore } from '@angular/fire/firestore'
 
 import { ModalController } from '@ionic/angular';
 
+// Importando o serviço de armazenamento offline
+import { Storage } from '@ionic/storage';
+
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -36,6 +40,7 @@ export class RegisterPage implements OnInit {
     public router: Router,
     public user: UserService,
     public afStore: AngularFirestore, // essa variável permite o uso do angular firestore 
+    private storage: Storage
     ) { }
 
   ngOnInit() {
@@ -55,7 +60,9 @@ export class RegisterPage implements OnInit {
       
       // estamos criando um documento no banco de dados, que possui a coleção de usuários através da utilização do .doc (acessa o documento) e do .set (seta o usuário conforme o id)
       this.afStore.doc(`/users/${res.user.uid}`).set({
-        username
+        username,
+        //DEFAULT IMG
+        avatar: "d6bc7f8a-f012-469b-b8c6-e62d44c098b8"
       })
 
       //Se um usuário existir, então entramos no if e setamos um usuário
@@ -67,8 +74,10 @@ export class RegisterPage implements OnInit {
       }
       
       //Armazenando no local storage o id, para caso exista um refresh da página!
-      window.localStorage.removeItem('id'); 
-      window.localStorage.setItem('id', res.user.uid); 
+      this.storage.set('id', res.user.uid);
+      //Antes estava com o local storage, deixei p/ caso de algum erro durante testes!
+      //window.localStorage.removeItem('id'); 
+      //window.localStorage.setItem('id', res.user.uid); 
 
       //Mostrando um alerta de sucesso!
       this.showAlert("Success", "Your account has been created!");

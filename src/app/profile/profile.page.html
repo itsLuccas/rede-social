@@ -1,7 +1,7 @@
 <!-- cabeçalho -->
 <ion-header>
     <ion-toolbar>
-        <ion-title style="font-weight: bold; font-size: 20px;">linda.silva</ion-title>
+        <ion-title style="font-weight: bold; font-size: 20px;">{{(userPosts | async)?.username}}</ion-title>
         <ion-buttons slot="end">
             <ion-menu-button slot="icon-only" name="menu-outline"></ion-menu-button>
         </ion-buttons>
@@ -13,7 +13,8 @@
     <ion-row>
         <ion-col style="text-align: -webkit-center;">
             <ion-avatar class="profile-avatar">
-                <img src="https://randomuser.me/api/portraits/women/20.jpg" />
+                <input  class="input-file" type="file" (change)="fileChanged($event)" #fileButton/>   
+                <img src="https://ucarecdn.com/{{ (userPosts | async)?.avatar }}/" (click)="uploadFile()"/> 
             </ion-avatar>
         </ion-col>
         <ion-col class="ion-text-center">
@@ -28,7 +29,7 @@
 
     <!-- bibliografia -->
     <div id="bibliografia" class="ion-padding-start">
-        <b>linda da silvah</b>
+        <b>{{(userPosts | async)?.username}}</b>
         <p class="ion-no-margin">eu sou linda e muito hidratadah, é sobre isso</p>
     </div>
 
@@ -48,9 +49,9 @@
 
     <!-- publicações -->
     <div id="images">
-        <div class="image" *ngFor="let post of ((userPosts | async)?.posts)">
+        <div class="image" *ngFor="let post of ((userPosts | async)?.posts); let i = index">
             <ion-card>
-                <ion-img src="https://ucarecdn.com/{{ post.imagem }}/-/crop/200x200/center/"></ion-img>
+                <ion-img src="https://ucarecdn.com/{{ post.imagem }}/-/scale_crop/200x200/center/"></ion-img>
             </ion-card>
         </div>
     </div>
@@ -77,7 +78,7 @@
             </ion-item>
             <ion-item>
                 <ion-icon name="log-out-outline"></ion-icon>
-                <ion-label class="ion-padding-start" routerLink="/login">Sair</ion-label>
+                <ion-label class="ion-padding-start" (click)="sair()">Sair</ion-label>
             </ion-item>
         </ion-list>
     </ion-content>

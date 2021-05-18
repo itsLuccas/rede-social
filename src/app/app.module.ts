@@ -25,6 +25,9 @@ import { UserService } from './user.service';
 import { from } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
+//
+import { IonicStorageModule } from "@ionic/storage-angular";
+
 
 
 
@@ -39,6 +42,7 @@ import { DatePipe } from '@angular/common';
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     // Inicializando o módulo de autenticação do firebase!
     AngularFireAuthModule,    
@@ -46,7 +50,8 @@ import { DatePipe } from '@angular/common';
     // Inicializando o firebase no aplicativo, com as configurações de autenticação passadas na importação de cima!
     AngularFireModule.initializeApp(firebaseConfig),    
     // Inicializando o módulo do http
-    HttpClientModule
+    HttpClientModule,
+    
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, UserService, DatePipe],
   bootstrap: [AppComponent],

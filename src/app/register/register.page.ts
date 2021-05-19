@@ -32,6 +32,8 @@ export class RegisterPage implements OnInit {
   username: string = "";
   password: string = "";
   cpassword: string = "";
+  peso: number;
+  litrosDia: number;
 
 
   constructor(
@@ -47,7 +49,7 @@ export class RegisterPage implements OnInit {
   }
 
   async signup() {
-    const { username, password, cpassword } = this;
+    const { username, password, cpassword, peso, litrosDia = peso * 0.035 } = this;    
 
     if(password !== cpassword) {
       this.showAlert("Error", "Passwords don't match!");
@@ -62,19 +64,25 @@ export class RegisterPage implements OnInit {
       this.afStore.doc(`/users/${res.user.uid}`).set({
         username,
         //DEFAULT IMG
-        avatar: "d6bc7f8a-f012-469b-b8c6-e62d44c098b8"
+        avatar: "d6bc7f8a-f012-469b-b8c6-e62d44c098b8",
+        peso,
+        litrosDia
       })
 
       //Se um usuário existir, então entramos no if e setamos um usuário
       if(res.user) {
           this.user.setUser({
           username,
-          uid: res.user.uid
+          uid: res.user.uid,
+          peso
         })
       }
       
       //Armazenando no local storage o id, para caso exista um refresh da página!
       this.storage.set('id', res.user.uid);
+      if(await this.storage.get(`litrosHj_${res.user.uid}`) === null) {
+        this.storage.set(`litrosHj_${res.user.uid}`, 0);
+      }
       //Antes estava com o local storage, deixei p/ caso de algum erro durante testes!
       //window.localStorage.removeItem('id'); 
       //window.localStorage.setItem('id', res.user.uid); 
@@ -83,7 +91,7 @@ export class RegisterPage implements OnInit {
       this.showAlert("Success", "Your account has been created!");
 
       // usuário criado, setado e registrado no banco de dados, agoar só basta redirecionarmos a página para o menu principal
-      this.router.navigate(['/tabs'])
+      this.router.navigate(['/tabs/feed'])
     
     } catch(error) {
       console.dir(error);

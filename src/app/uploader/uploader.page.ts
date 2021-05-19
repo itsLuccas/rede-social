@@ -20,6 +20,7 @@ import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 
 import { Storage } from '@ionic/storage';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -34,15 +35,24 @@ import { Storage } from '@ionic/storage';
 })
 export class UploaderPage implements OnInit {
 
-  imageURL: string
-  desc: string
+  imageURL: string;
+  desc: string;
+  userData;
+  rangeValue: number;
+  aguaDia: number;
 
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;
 
-  constructor(private storage: Storage, public http: HttpClient, public afStore: AngularFirestore, public user: UserService, public alert: AlertController, public datePipe: DatePipe) { }
+  constructor(private storage: Storage, public http: HttpClient, public afStore: AngularFirestore, public user: UserService, public alert: AlertController, public datePipe: DatePipe, private aRoute: ActivatedRoute) {
+    this.aRoute.params.subscribe(async () => {
+      const fireUser = this.afStore.doc(`users/${await this.storage.get('id')}`);
+      this.userData = fireUser.valueChanges();
+      this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);        
+    })
+   }
 
-  ngOnInit() {   
+  ngOnInit() { 
   }
 
   async postar() {
@@ -69,6 +79,15 @@ export class UploaderPage implements OnInit {
 
     this.showAlert('ta ok ai?', 'teu post foi realizado com sucesso meu querido');
     this.imageURL = null;
+
+    //Reponsável por armazenar a água bebida
+    this.storage.set(`litrosHj_${await this.storage.get('id')}`, await this.storage.get(`litrosHj_${await this.storage.get('id')}`) + this.rangeValue);
+    await this.delay(1000);
+    this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);       
+  }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
   uploadFile() {

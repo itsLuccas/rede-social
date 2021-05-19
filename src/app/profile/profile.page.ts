@@ -16,8 +16,8 @@ import { HttpClient } from '@angular/common/http'
 // Serve para fechar o menu, após clicar em "Sair()"
 import { MenuController } from '@ionic/angular'; 
 
-
-
+// 
+import { AlertController, IonButton } from '@ionic/angular'
 
 @Component({
   selector: 'app-profile',
@@ -32,7 +32,7 @@ export class ProfilePage implements OnInit {
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;
 
-  constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, public router: Router, private aRoute: ActivatedRoute, private menu: MenuController) {
+  constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, public router: Router, private aRoute: ActivatedRoute, private menu: MenuController, private alert: AlertController) {
     this.aRoute.params.subscribe(() => {
       this.accessDoc();       
     })
@@ -84,4 +84,20 @@ export class ProfilePage implements OnInit {
   
   ngOnInit() {    
   }
+
+  public nCols: 3 | 1;
+
+  deleteImg(post: any){
+    this.showAlert("Deseja excluir esta imagem?");
+  }
+
+  async showAlert(message: string) {
+    const alert = await this.alert.create({
+      message,
+      buttons: ['Sim', 'Cancelar'], 
+      cssClass: 'foo',
+    }) 
+    await alert.present()
+  }
+
 }

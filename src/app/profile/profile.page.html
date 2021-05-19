@@ -47,14 +47,25 @@
 
     <hr style="margin-top: 0px;" class="hr">
 
+    <!-- exibição das publicações -->
+    <ion-segment [(ngModel)]="nCols">
+        <ion-segment-button [value]="3">
+            <ion-icon name="grid"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button [value]="1">
+            <ion-icon name="square"></ion-icon>
+        </ion-segment-button>
+    </ion-segment>
+
     <!-- publicações -->
-    <div id="images">
-        <div class="image" *ngFor="let post of ((userPosts | async)?.posts); let i = index">
+    <ion-row id="images">
+        <ion-col [size]="12/nCols" class="image" *ngFor="let post of ((userPosts | async)?.posts)">
             <ion-card>
-                <ion-img src="https://ucarecdn.com/{{ post.imagem }}/-/scale_crop/200x200/center/"></ion-img>
+                <ion-icon (click)="deleteImg(post.imagem);" style="padding-left: 4px;" name="close-circle"></ion-icon>
+                <ion-img src="https://ucarecdn.com/{{ post.imagem }}/-/crop/400x400/center/"></ion-img>
             </ion-card>
-        </div>
-    </div>
+        </ion-col>
+    </ion-row>
 </ion-content>
 
 

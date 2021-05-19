@@ -38,8 +38,8 @@ export class UploaderPage implements OnInit {
   imageURL: string;
   desc: string;
   userData;
-  rangeValue: number;
-  aguaDia: number;
+  rangeValue: number = 0;
+  aguaDia: number = 0;
 
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;

@@ -86,6 +86,11 @@ export class UploaderPage implements OnInit {
     this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);       
   }
 
+  async resetAgua() {
+    this.storage.set(`litrosHj_${await this.storage.get('id')}`, 0);
+    this.aguaDia = 0;
+  }
+
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }

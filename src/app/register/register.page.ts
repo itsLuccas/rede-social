@@ -44,15 +44,15 @@ export class RegisterPage implements OnInit {
     public user: UserService,
     public afStore: AngularFirestore, // essa variável permite o uso do angular firestore 
     private storage: Storage
-    ) { }
+  ) { }
 
   ngOnInit() {
   }
 
   async signup() {
-    const { username, password, cpassword, peso, litrosDia = peso * 0.035 } = this;    
+    const { username, password, cpassword, peso, litrosDia = peso * 0.035 } = this;
 
-    if(password !== cpassword) {
+    if (password !== cpassword) {
       Swal.fire({
         icon: 'error',
         title: 'Senhas não coincidem!',
@@ -60,12 +60,12 @@ export class RegisterPage implements OnInit {
         position: "center-start"
       });
       return console.error("Passwords don't match!");
-    } 
+    }
 
     try {
       // uso da variável afAuth que permite a autenticação do usuário
-      const res = await this.afAuth.createUserWithEmailAndPassword(username + '@luccas.com', password); 
-      
+      const res = await this.afAuth.createUserWithEmailAndPassword(username + '@luccas.com', password);
+
       // estamos criando um documento no banco de dados, que possui a coleção de usuários através da utilização do .doc (acessa o documento) e do .set (seta o usuário conforme o id)
       this.afStore.doc(`/users/${res.user.uid}`).set({
         username,
@@ -76,17 +76,17 @@ export class RegisterPage implements OnInit {
       })
 
       //Se um usuário existir, então entramos no if e setamos um usuário
-      if(res.user) {
-          this.user.setUser({
+      if (res.user) {
+        this.user.setUser({
           username,
           uid: res.user.uid,
           peso
         })
       }
-      
+
       //Armazenando no local storage o id, para caso exista um refresh da página!
       this.storage.set('id', res.user.uid);
-      if(await this.storage.get(`litrosHj_${res.user.uid}`) === null) {
+      if (await this.storage.get(`litrosHj_${res.user.uid}`) === null) {
         this.storage.set(`litrosHj_${res.user.uid}`, 0);
       }
       //Antes estava com o local storage, deixei p/ caso de algum erro durante testes!
@@ -103,44 +103,42 @@ export class RegisterPage implements OnInit {
 
       // usuário criado, setado e registrado no banco de dados, agoar só basta redirecionarmos a página para o menu principal
       this.router.navigate(['/tabs/feed'])
-    
-    } catch(err) {
+
+    } catch (err) {
       console.dir(err);
-      if(err.code == "auth/invalid-email") {
+      if (err.code == "auth/invalid-email") {
         Swal.fire({
           icon: 'error',
           title: 'Formato de username errado!',
           backdrop: false,
           position: "center-start"
         });
-      }else if(err.code == "auth/weak-password"){
+      } else if (err.code == "auth/weak-password") {
         Swal.fire({
           icon: 'warning',
           title: 'A senha deve ter no mínimo 6 caracteres!',
           backdrop: false,
           position: "center-start"
         });
-      }else if(err.code == "auth/email-already-in-use"){
+      } else if (err.code == "auth/email-already-in-use") {
         Swal.fire({
           icon: 'warning',
           title: 'Esse username já está sendo utilizado!',
           backdrop: false,
           position: "center-start"
         });
-      }  
-  }
-  
-  /*async showAlert(header: string, message: string) {
-    const alert = await this.alert.create({
-      header, 
-      message, 
-      buttons: ['ok'],
-      cssClass: 'foo',
-    }) 
-    await alert.present()
+      }
+    }
   }
 
-}
-*/
+  async presentExplanation(header: string, message: string) {
+    Swal.fire({
+      icon: 'question',
+      title: 'Por que precisamos do seu peso?',
+      html: "Para saber a quantidade de água exata que você precisa tomar por dia, a primeira coisa a se fazer é analisar o seu peso. O cálculo a ser feito é de 35 ml de água multiplicado pelo peso corporal de cada um. Então vamos levar em consideração uma pessoa que pese 60 kg e não sabe quanta água ela precisa tomar por dia. A conta seria a seguinte: 60 x 0,035 = 2,1L",
+      backdrop: false,
+      position: "center-start"
+    })
   }
+
 }

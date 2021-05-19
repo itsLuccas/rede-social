@@ -7,7 +7,8 @@ import { AngularFireAuth } from '@angular/fire/auth'
 // criando uma interface que contém os dados do usuário! 
 interface user {
     username: string, // não me permitiu usar nome, apenas username
-    uid: string
+    uid: string,
+    peso: number
 }
 
 @Injectable()

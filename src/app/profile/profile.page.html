@@ -61,7 +61,7 @@
     <ion-row id="images">
         <ion-col [size]="12/nCols" class="image" *ngFor="let post of ((userPosts | async)?.posts)">
             <ion-card>
-                <ion-icon (click)="deleteImg(post.imagem);" style="padding-left: 85%;" name="close-circle"></ion-icon>
+                <ion-icon (click)="deleteImg(post.imagem);" style="padding-left: 4px;" name="close-circle"></ion-icon>
                 <ion-img src="https://ucarecdn.com/{{ post.imagem }}/-/crop/400x400/center/"></ion-img>
             </ion-card>
         </ion-col>

@@ -9,13 +9,19 @@ import { UserService } from '../user.service';
 import { Storage } from '@ionic/storage';
 
 // Importando o serviço de roteamento do próprio angular
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http'
+
+
 import { firestore } from 'firebase';
 import { AlertController } from '@ionic/angular';
 
+// Serve para fechar o menu, após clicar em "Sair()"
+import { MenuController } from '@ionic/angular'; 
+
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-profile',
@@ -33,7 +39,11 @@ export class ProfilePage implements OnInit {
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;
 
-  constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, private alert: AlertController, public router: Router) {}
+  constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, public router: Router, private aRoute: ActivatedRoute, private menu: MenuController, private alert: AlertController) {
+    this.aRoute.params.subscribe(() => {
+      this.accessDoc();       
+    })
+  }
 
    async accessDoc() {
     // pegando os posts do usuário logado!    
@@ -44,7 +54,8 @@ export class ProfilePage implements OnInit {
    }
 
    sair() {    
-    this.storage.clear();
+    this.storage.remove('id'); 
+    this.menu.close();
     this.router.navigate(['/login']);
    }
 
@@ -68,30 +79,27 @@ export class ProfilePage implements OnInit {
     })
     
     swalWithBootstrapButtons.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Você deseja deletar esse post?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: 'Sim, deletar.',
       confirmButtonColor: '#00cc00',
-      cancelButtonText: 'No, cancel!',
+      cancelButtonText: 'Não, cancelar.',
       cancelButtonColor: '#d33',
-      reverseButtons: true
+      reverseButtons: true,
+      backdrop: false,
+      position: 'center-start'
     }).then((result) => {
       if (result.isConfirmed) {
         swalWithBootstrapButtons.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success',
+          'Deletado!',
         )
       } else if (
         /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel
       ) {
         swalWithBootstrapButtons.fire(
-          'Cancelled',
-          'Your imaginary file is safe :)',
-          'error'
+          'Cancelado!',
         )
       }
     })
@@ -105,7 +113,7 @@ export class ProfilePage implements OnInit {
     const data = new FormData();
     
     data.append('file', files[0]);
-    data.append('UPLOADCARE_PUB_KEY', 'b43fb80af5560135229d');
+    data.append('UPLOADCARE_PUB_KEY', 'b6677f56876ab7996079');
     data.append('UPLOADCARE_STORE', '1');
     
     // Tenho que descobrir o que significa isso!!!!!
@@ -126,17 +134,8 @@ export class ProfilePage implements OnInit {
     })
   }
   
-  ngOnInit() {
-    this.accessDoc(); 
+  ngOnInit() {    
   }
 
-  async showAlert(message: string) {
-    const alert = await this.alert.create({
-      message,
-      buttons: ['Sim', 'Cancelar'], 
-      cssClass: 'foo',
-    }) 
-    await alert.present()
-  }
 
 }

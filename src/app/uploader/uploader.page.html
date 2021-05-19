@@ -6,7 +6,19 @@
 
 <ion-content class="ion-padding">
   <p style="color: #6fa3ff; font-weight: bold;" class="ion-text-center">Drinking Progress</p>
-  <ion-progress-bar></ion-progress-bar>
+  <ion-progress-bar [value]="(aguaDia/1000)/(userData | async)?.litrosDia"></ion-progress-bar>
+  
+  <p class="ion-text-center">{{aguaDia/1000}}L / {{(userData | async)?.litrosDia.toFixed(2)}}L</p>
+  <div class="ion-text-center">
+    <ion-button (click)="resetAgua()"><ion-icon name="refresh-outline"></ion-icon></ion-button>
+  </div>
+  
+  
+  <ion-item>
+    <ion-range min="0" max="1000" pin color="secondary" [(ngModel)]="rangeValue"> 
+      <ion-icon slot="end" name="water-outline"></ion-icon>
+    </ion-range>
+  </ion-item>
 
   <div class="center">
     <div class="camera">

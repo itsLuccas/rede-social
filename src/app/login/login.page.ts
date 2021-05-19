@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
+import { Storage } from '@ionic/storage';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -20,19 +22,21 @@ import Swal from 'sweetalert2';
 export class LoginPage implements OnInit {
 
   
-  username: string = ""
-  password: string = ""
+  username: string = "";
+  password: string = "";
+  peso: number;
 
   
   // instânciando o usuário no construtor, assim como os recursos do firebase
-  constructor(public afAuth: AngularFireAuth, public user: UserService, public router: Router) { }
+  constructor(public afAuth: AngularFireAuth, public user: UserService, public router: Router, private storage: Storage) { }
 
   ngOnInit() {
   }
 
   // Preciso descobrir o que significa esse assíncrono!!!!
   async login() {
-    const { username, password } = this
+
+    const { username, password, peso } = this
     Swal.fire({
       title: 'Carregando',
       imageUrl: 'https://imagehost7.online-image-editor.com/oie_upload/images/19221816vy632/oie_canvas.png',
@@ -55,13 +59,22 @@ export class LoginPage implements OnInit {
       if(res.user) {
         this.user.setUser({
           username,
-          uid: res.user.uid                   
+          uid: res.user.uid,
+          peso                 
         })
 
-      //Armazenando no local storage o id, para caso exista um refresh da página!
-        window.localStorage.removeItem('id'); 
-        window.localStorage.setItem('id', res.user.uid); 
+
+        //Armazenando no local storage o id, para caso exista um refresh da página!
+        this.storage.set('id', res.user.uid);     
         
+
+        if(await this.storage.get(`litrosHj_${res.user.uid}`) === null) {
+          this.storage.set(`litrosHj_${res.user.uid}`, 0);
+        }
+        
+        //window.localStorage.removeItem('id'); 
+        //window.localStorage.setItem('id', res.user.uid); 
+
       //Mostrando um alerta de sucesso!
       Swal.fire({
         icon: 'success',

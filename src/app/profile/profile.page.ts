@@ -69,7 +69,7 @@ export class ProfilePage implements OnInit {
     const data = new FormData();
     
     data.append('file', files[0]);
-    data.append('UPLOADCARE_PUB_KEY', 'b43fb80af5560135229d');
+    data.append('UPLOADCARE_PUB_KEY', 'b6677f56876ab7996079');
     data.append('UPLOADCARE_STORE', '1');
     
     // Tenho que descobrir o que significa isso!!!!!

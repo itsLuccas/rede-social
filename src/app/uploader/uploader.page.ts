@@ -100,9 +100,13 @@ export class UploaderPage implements OnInit {
     // Criando uma estrutura de dados para publicar na API do uploadcare!
     const data = new FormData();
     data.append('file', files[0]);
-    data.append('UPLOADCARE_PUB_KEY', 'b43fb80af5560135229d');
+    data.append('UPLOADCARE_PUB_KEY', 'b6677f56876ab7996079');
     data.append('UPLOADCARE_STORE', '1');
     
+    //algumas public keys
+    // - luccas b43fb80af5560135229d
+    // - xofanna b6677f56876ab7996079
+
     // Tenho que descobrir o que significa isso!!!!!
     this.http.post('https://upload.uploadcare.com/base/', data)
     .subscribe(event => {      

@@ -21,7 +21,7 @@
     <ion-card *ngIf="imageURL">
       <img src="https://ucarecdn.com/{{imageURL}}/"/>
       <ion-card-content>
-        <ion-textarea aria-placeholder="digita alguma coisa ai" [(ngModel)] = "desc"></ion-textarea>
+        <ion-textarea placeholder="digite qualquer coisa" [(ngModel)] = "desc"></ion-textarea>
         <ion-button (click)="postar()">POST</ion-button>
       </ion-card-content>
     </ion-card>

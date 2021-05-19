@@ -21,7 +21,7 @@ import { DatePipe } from '@angular/common';
 
 import { Storage } from '@ionic/storage';
 
-
+import Swal from 'sweetalert2';
 
 
 
@@ -35,6 +35,7 @@ import { Storage } from '@ionic/storage';
 export class UploaderPage implements OnInit {
 
   imageURL: string
+  url: string
   desc: string
 
   // view child para ver as ids do css
@@ -67,7 +68,13 @@ export class UploaderPage implements OnInit {
       })
     }, {merge: true});
 
-    this.showAlert('ta ok ai?', 'teu post foi realizado com sucesso meu querido');
+    Swal.fire({
+      title: 'Sucesso!',
+      imageUrl: `https://ucarecdn.com/${this.imageURL}/`,
+      imageAlt: 'Custom image',
+      icon: 'success'
+    })
+
     this.imageURL = null;
   }
 
@@ -99,4 +106,7 @@ export class UploaderPage implements OnInit {
     }) 
     await alert.present()
   }
+
+  
+
 }

@@ -7,6 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+
 // Importando as configurações de autenticação do firebase, para permitir o acesso a esta ferramenta!
 import firebaseConfig from './firebase'
 

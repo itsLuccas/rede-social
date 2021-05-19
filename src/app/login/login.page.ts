@@ -9,10 +9,7 @@ import { UserService } from '../user.service';
 // Importando o serviço de roteamento do próprio angular
 import { Router } from '@angular/router';
 
-import { Storage } from '@ionic/storage';
-
-
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -26,16 +23,28 @@ export class LoginPage implements OnInit {
   username: string = ""
   password: string = ""
 
+  
   // instânciando o usuário no construtor, assim como os recursos do firebase
-  constructor(public afAuth: AngularFireAuth, public user: UserService, public router: Router, private storage: Storage) {}
+  constructor(public afAuth: AngularFireAuth, public user: UserService, public router: Router) { }
 
   ngOnInit() {
-    
   }
 
   // Preciso descobrir o que significa esse assíncrono!!!!
   async login() {
     const { username, password } = this
+    Swal.fire({
+      title: 'Carregando',
+      imageUrl: 'https://imagehost7.online-image-editor.com/oie_upload/images/19221816vy632/oie_canvas.png',
+      timer: 2500,
+      timerProgressBar: true,
+      backdrop: false,
+      position: 'center-start',
+      didOpen: () => {
+        Swal.showLoading()
+      }
+    })
+    
     try {
       // Mandando a famosa gambiarra, pq o login é feito com email!!!!
       // const "result"
@@ -49,24 +58,71 @@ export class LoginPage implements OnInit {
           uid: res.user.uid                   
         })
 
-        //Armazenando no local storage o id, para caso exista um refresh da página!
-        this.storage.set('id', res.user.uid);
-        //window.localStorage.removeItem('id'); 
-        //window.localStorage.setItem('id', res.user.uid); 
+      //Armazenando no local storage o id, para caso exista um refresh da página!
+        window.localStorage.removeItem('id'); 
+        window.localStorage.setItem('id', res.user.uid); 
         
+      //Mostrando um alerta de sucesso!
+      Swal.fire({
+        icon: 'success',
+        title: 'Logado!',
+        backdrop: false,
+        position: "center-start"
+      });
         
-        // Depois do login, fazemos o roteamento para a página principal 
-        this.router.navigate(['/tabs/feed']);        
+      // Depois do login, fazemos o roteamento para a página principal 
+        this.router.navigate(['/tabs']);
       }
       
     } catch(err) {
       console.dir(err);
       if(err.code == "auth/user-not-found") {
-        console.log("User not found!");
+        Swal.fire({
+          icon: 'error',
+          title: 'Usuário não encontrado!',
+          backdrop: false,
+          position: "center-start",
+          didOpen: () => {
+            Swal.hideLoading()
+          }
+        });
+      }else if(this.password === ''){
+        Swal.fire({
+          icon: 'warning',
+          title: 'Campo senha não preenchido.',
+          backdrop: false,
+          position: "center-start",
+          didOpen: () => {
+            Swal.hideLoading()
+          }
+        });
+      }else if(err.code == "auth/wrong-password"){
+        Swal.fire({
+          icon: 'error',
+          title: 'Senha incorreta!',
+          backdrop: false,
+          position: "center-start",
+          didOpen: () => {
+            Swal.hideLoading()
+          }
+        });
+        console.log(this.password);
+      }else if(err.code == "auth/invalid-email"){
+        Swal.fire({
+          icon: 'warning',
+          title: 'Campo usuário não preenchido.',
+          backdrop: false,
+          position: "center-start",
+          didOpen: () => {
+            Swal.hideLoading()
+          }
+        });
       }
     }
+    
+    
   } 
-
+  
   register() {
     this.router.navigate(['register']);
   }

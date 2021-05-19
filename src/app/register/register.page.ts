@@ -20,6 +20,7 @@ import { ModalController } from '@ionic/angular';
 // Importando o serviço de armazenamento offline
 import { Storage } from '@ionic/storage';
 
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -50,7 +51,12 @@ export class RegisterPage implements OnInit {
     const { username, password, cpassword } = this;
 
     if(password !== cpassword) {
-      this.showAlert("Error", "Passwords don't match!");
+      Swal.fire({
+        icon: 'error',
+        title: 'Senhas não coincidem!',
+        backdrop: false,
+        position: "center-start"
+      });
       return console.error("Passwords don't match!");
     } 
 
@@ -80,18 +86,43 @@ export class RegisterPage implements OnInit {
       //window.localStorage.setItem('id', res.user.uid); 
 
       //Mostrando um alerta de sucesso!
-      this.showAlert("Success", "Your account has been created!");
+      Swal.fire({
+        icon: 'success',
+        title: 'Sua conta foi criada!',
+        backdrop: false,
+        position: "center-start"
+      });
 
       // usuário criado, setado e registrado no banco de dados, agoar só basta redirecionarmos a página para o menu principal
       this.router.navigate(['/tabs'])
     
-    } catch(error) {
-      console.dir(error);
-      this.showAlert("Error", error.message);
-    }  
+    } catch(err) {
+      console.dir(err);
+      if(err.code == "auth/invalid-email") {
+        Swal.fire({
+          icon: 'error',
+          title: 'Formato de username errado!',
+          backdrop: false,
+          position: "center-start"
+        });
+      }else if(err.code == "auth/weak-password"){
+        Swal.fire({
+          icon: 'warning',
+          title: 'A senha deve ter no mínimo 6 caracteres!',
+          backdrop: false,
+          position: "center-start"
+        });
+      }else if(err.code == "auth/email-already-in-use"){
+        Swal.fire({
+          icon: 'warning',
+          title: 'Esse username já está sendo utilizado!',
+          backdrop: false,
+          position: "center-start"
+        });
+      }  
   }
-
-  async showAlert(header: string, message: string) {
+  
+  /*async showAlert(header: string, message: string) {
     const alert = await this.alert.create({
       header, 
       message, 
@@ -102,4 +133,6 @@ export class RegisterPage implements OnInit {
   }
 
 }
-
+*/
+  }
+}

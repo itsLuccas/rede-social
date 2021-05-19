@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http'
 import { firestore } from 'firebase';
+import { AlertController } from '@ionic/angular';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -22,12 +25,15 @@ import { firestore } from 'firebase';
 export class ProfilePage implements OnInit {
 
   
-  userPosts;    
+  public nCols: 3 | 1;
+  userPosts;
+
+  
 
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;
 
-  constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, public router: Router) {}
+  constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, private alert: AlertController, public router: Router) {}
 
    async accessDoc() {
     // pegando os posts do usuário logado!    
@@ -48,10 +54,50 @@ export class ProfilePage implements OnInit {
 
 
   uploadFile() {
-    this.fileButton.nativeElement.click(); 
+    this.fileButton.nativeElement.click();
   }
 
-   fileChanged(event) {
+  
+  deleteImg(post){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: true
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      confirmButtonColor: '#00cc00',
+      cancelButtonText: 'No, cancel!',
+      cancelButtonColor: '#d33',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        swalWithBootstrapButtons.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success',
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+  }
+
+  fileChanged(event) {
     const files = event.target.files;
     
 
@@ -70,10 +116,27 @@ export class ProfilePage implements OnInit {
         avatar: JSON.parse(JSON.stringify(event)).file
       }) 
     })
+    Swal.fire({
+      position: 'top-start',
+      icon: 'success',
+      title: 'Avatar atualizado',
+      showConfirmButton: false,
+      timer: 1500,
+      backdrop: false
+    })
   }
   
   ngOnInit() {
     this.accessDoc(); 
+  }
+
+  async showAlert(message: string) {
+    const alert = await this.alert.create({
+      message,
+      buttons: ['Sim', 'Cancelar'], 
+      cssClass: 'foo',
+    }) 
+    await alert.present()
   }
 
 }

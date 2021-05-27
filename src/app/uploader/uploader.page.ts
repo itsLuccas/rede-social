@@ -23,6 +23,7 @@ import { Storage } from '@ionic/storage';
 import { ActivatedRoute } from '@angular/router';
 
 import Swal from 'sweetalert2';
+import { Observable } from 'rxjs';
 
 
 
@@ -38,7 +39,7 @@ export class UploaderPage implements OnInit {
 
   imageURL: string;
   desc: string;
-  userData;
+  userData: Observable<any>;
   rangeValue: number = 0;
   aguaDia: number = 0;
 
@@ -47,7 +48,7 @@ export class UploaderPage implements OnInit {
 
   constructor(private storage: Storage, public http: HttpClient, public afStore: AngularFirestore, public user: UserService, public alert: AlertController, public datePipe: DatePipe, private aRoute: ActivatedRoute) {
     this.aRoute.params.subscribe(async () => {
-      const fireUser = this.afStore.doc(`users/${await this.storage.get('id')}`);
+      const fireUser = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
       this.userData = fireUser.valueChanges();
       this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);        
     })

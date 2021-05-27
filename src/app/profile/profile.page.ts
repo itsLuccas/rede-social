@@ -21,6 +21,7 @@ import { AlertController } from '@ionic/angular';
 import { MenuController } from '@ionic/angular'; 
 
 import Swal from 'sweetalert2';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class ProfilePage implements OnInit {
 
   
   public nCols: 3 | 1;
-  userPosts;
+  public userPosts: Observable<any>;
 
   
 
@@ -47,7 +48,8 @@ export class ProfilePage implements OnInit {
 
    async accessDoc() {
     // pegando os posts do usuário logado!    
-    const posts = this.afStore.doc(`users/${await this.storage.get('id')}`);
+    const posts = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
+    //const posts = this.afStore.doc(`users/${await this.storage.get('id')}`).get();
     // é um observador, serve para pegar as alterações de posts quando um novo post é realizado, por isso o valueChanges()
     // retorna o doc "posts" do usuário
     this.userPosts = posts.valueChanges();    
@@ -69,7 +71,24 @@ export class ProfilePage implements OnInit {
   }
 
   
-  deleteImg(post){
+  deleteImg(a: string, b: string, c: string){
+    let obj
+    if(c === undefined) {
+      obj = {
+        imagem: a,
+        desc: b
+      }
+    } else {
+      obj = {
+        imagem: a,
+        desc: b,
+        date: c
+      }
+    }
+    
+
+    
+
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
@@ -89,9 +108,12 @@ export class ProfilePage implements OnInit {
       reverseButtons: true,
       backdrop: false,
       position: 'center-start'
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        swalWithBootstrapButtons.fire(
+        this.afStore.doc(`users/${await this.storage.get('id')}`).update({
+          posts: firestore.FieldValue.arrayRemove(obj)      
+        }); 
+        swalWithBootstrapButtons.fire(                    
           'Deletado!',
         )
       } else if (

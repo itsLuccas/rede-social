@@ -131,7 +131,7 @@ export class RegisterPage implements OnInit {
     }
   }
 
-  async presentExplanation(header: string, message: string) {
+  async presentExplanation() {
     Swal.fire({
       icon: 'question',
       title: 'Por que precisamos do seu peso?',

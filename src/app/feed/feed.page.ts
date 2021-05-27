@@ -7,6 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
 
 import { ActivatedRoute, Router } from '@angular/router'
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-feed',
@@ -15,11 +16,12 @@ import { ActivatedRoute, Router } from '@angular/router'
 })
 export class FeedPage implements OnInit {
 
-  allUsers;
+  allUsers: Observable<any[]>;
+  teste: string
   
   constructor(private afStore: AngularFirestore, private user: UserService, private router: ActivatedRoute) {  
     this.router.params.subscribe(() => {      
-      const users = afStore.collection(`users`);       
+      const users = this.afStore.collection<any>(`users/`);       
       this.allUsers = users.valueChanges();
     });    
   }

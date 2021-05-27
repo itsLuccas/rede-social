@@ -6,8 +6,7 @@
 
 <ion-content>
   <div id="images">
-    <div class="image" *ngFor="let user of (allUsers | async); let i = index">
-      <p>{{user.username}}</p>
+    <div class="image" *ngFor="let user of (allUsers | async); let i = index">      
       <ion-card *ngIf="user.posts !== undefined">
         <div *ngIf="user.posts.length !== 0">
           <ion-grid>

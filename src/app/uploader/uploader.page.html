@@ -1,41 +1,41 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Uploader</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Carregar Post</ion-title>
+        <ion-button id="btn-refresh" slot="end" (click)="resetAgua()">
+            <ion-icon name="refresh-outline"></ion-icon>
+        </ion-button>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <p style="color: #6fa3ff; font-weight: bold;" class="ion-text-center">Drinking Progress</p>
-  <ion-progress-bar [value]="(aguaDia/1000)/(userData | async)?.litrosDia"></ion-progress-bar>
-  
-  <p class="ion-text-center">{{aguaDia/1000}}L / {{(userData | async)?.litrosDia.toFixed(2)}}L</p>
-  <div class="ion-text-center">
-    <ion-button (click)="resetAgua()"><ion-icon name="refresh-outline"></ion-icon></ion-button>
-  </div>
-  
-  
-  <ion-item>
-    <ion-range min="0" max="1000" pin color="secondary" [(ngModel)]="rangeValue"> 
-      <ion-icon slot="end" name="water-outline"></ion-icon>
-    </ion-range>
-  </ion-item>
+    <p style="color: #6fa3ff; font-weight: bold;" class="ion-text-center">Progresso de Ingestão de Água</p>
+    <ion-progress-bar [value]="(aguaDia/1000)/(userData | async)?.litrosDia"></ion-progress-bar>
 
-  <div class="center">
-    <div class="camera">
-      <p>camera espace, still needs to be implemented!</p>
+    <p style="color: #6fa3ff;" class="ion-text-center">{{aguaDia/1000}}L / {{(userData | async)?.litrosDia.toFixed(2)}}L</p>
+
+
+    <ion-item>
+        <ion-range min="0" max="1000" pin color="secondary" [(ngModel)]="rangeValue">
+            <ion-icon style="color:#6fa3ff ;" slot="end" name="water-outline"></ion-icon>
+        </ion-range>
+    </ion-item>
+
+    <div class="center">
+        <div class="camera">
+            <p>camera espace, still needs to be implemented!</p>
+        </div>
+
+        <input type="file" *ngIf="!imageURL" (change)="fileChanged($event)" class="filebtn" #fileButton/>
+
+        <ion-button shape="round" color="primary" (click)="uploadFile()" *ngIf="!imageURL" fill="outline"> Carregar imagem </ion-button>
+
+
+        <ion-card *ngIf="imageURL">
+            <img src="https://ucarecdn.com/{{imageURL}}/" />
+            <ion-card-content>
+                <ion-textarea placeholder="digite qualquer coisa" [(ngModel)]="desc"></ion-textarea>
+                <ion-button (click)="postar()">POST</ion-button>
+            </ion-card-content>
+        </ion-card>
     </div>
-
-    <input type="file" *ngIf="!imageURL" (change)="fileChanged($event)" class="filebtn" #fileButton/>
-
-    <ion-button shape="round" color="primary" (click)="uploadFile()" *ngIf="!imageURL" fill="outline"> Upload File </ion-button>
-    
-    
-    <ion-card *ngIf="imageURL">
-      <img src="https://ucarecdn.com/{{imageURL}}/"/>
-      <ion-card-content>
-        <ion-textarea placeholder="digite qualquer coisa" [(ngModel)] = "desc"></ion-textarea>
-        <ion-button (click)="postar()">POST</ion-button>
-      </ion-card-content>
-    </ion-card>
-  </div>
 </ion-content>

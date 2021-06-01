@@ -1,36 +1,36 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Register</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Registro</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list class="body">
-    <ion-item>
-      <ion-label position="floating">Username</ion-label>
-      <ion-input [(ngModel)]="username"></ion-input>
-    </ion-item>
+    <ion-list class="body">
+        <ion-item>
+            <ion-label position="floating">Nome de usuário</ion-label>
+            <ion-input [(ngModel)]="username"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" [(ngModel)]="password"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label position="floating">Senha</ion-label>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Confirm password</ion-label>
-      <ion-input type="password" [(ngModel)]="cpassword"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label position="floating">Confirmar senha</ion-label>
+            <ion-input type="password" [(ngModel)]="cpassword"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Weight (Kg)</ion-label>
-      <ion-input type="number" [(ngModel)]="peso"></ion-input>
-    </ion-item>   
+        <ion-item>
+            <ion-label position="floating">Peso (Kg)</ion-label>
+            <ion-input type="number" [(ngModel)]="peso"></ion-input>
+        </ion-item>
 
-    <ion-icon class="icon-doubt" name="help-circle-outline" (click)="presentExplanation()"></ion-icon>
+        <ion-icon class="icon-doubt" name="help-circle-outline" (click)="presentExplanation()"></ion-icon>
 
-    <ion-button expand="block" (click)="signup()" class="bcolor" >Signup</ion-button>
-  </ion-list>
+        <ion-button expand="block" (click)="signup()" class="bcolor">Registrar-se</ion-button>
+    </ion-list>
 </ion-content>

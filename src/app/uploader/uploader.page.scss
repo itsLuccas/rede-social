@@ -1,4 +1,4 @@
-.camera{
+.camera {
     width: 250px;
     height: 250px;
     margin: auto;
@@ -18,4 +18,11 @@
     height: 100%;
     justify-content: center;
     align-items: center;
+}
+
+#btn-refresh {
+    margin-right: 5px;
+    --background: white;
+    --color: grey;
+    --box-shadow: none;
 }

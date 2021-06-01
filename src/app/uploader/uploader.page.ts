@@ -95,8 +95,41 @@ export class UploaderPage implements OnInit {
   }
 
   async resetAgua() {
-    this.storage.set(`litrosHj_${await this.storage.get('id')}`, 0);
-    this.aguaDia = 0;
+
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: true
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Você deseja resetar a quantidade de água ingerida hoje?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, deletar.',
+      confirmButtonColor: '#00cc00',
+      cancelButtonText: 'Não, cancelar.',
+      cancelButtonColor: '#d33',
+      reverseButtons: true,
+      position: 'center-start'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        this.storage.set(`litrosHj_${await this.storage.get('id')}`, 0);
+        this.aguaDia = 0;
+        swalWithBootstrapButtons.fire(                    
+          'Quantidade consumida de água resetada!',
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado!',
+        )
+      }
+    })
   }
 
   delay(ms: number) {

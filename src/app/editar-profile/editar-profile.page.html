@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Editar Perfil</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="tabs/profile"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="centraliza">
+        <ion-avatar class="profile-avatar">
+            <input class="input-file" type="file" (change)="fileChanged($event)" #fileButton/>
+            <img src="https://ucarecdn.com/{{ (userPosts | async)?.avatar }}/" />
+        </ion-avatar>
+    </div>
+    <div class="centraliza">
+        <ion-button id="btn-alterar-foto" (click)="uploadFile()">Alterar foto de perfil</ion-button>
+    </div>
+
+    <ion-item>
+        <ion-label position="floating">Nome de usuário</ion-label>
+        <ion-input style="margin-top: 10px; font-size: 15px;" [(ngModel)]="username" placeholder="{{(userPosts | async)?.username}}"></ion-input>
+        <ion-icon slot="end" id="icone-salvar" name="checkmark-circle-sharp" (click)="salvarUsuario()"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+        <ion-label position="floating">Biografia</ion-label>
+        <ion-input style="margin-top: 10px; font-size: 15px;" [(ngModel)]="biografia" placeholder="{{(userPosts | async)?.biografia}}"></ion-input>
+        <ion-icon slot="end" id="icone-salvar" name="checkmark-circle-sharp" (click)="salvarBiografia()"></ion-icon>
+    </ion-item>
+
+</ion-content>

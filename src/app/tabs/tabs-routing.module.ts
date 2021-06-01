@@ -21,6 +21,10 @@ const routes: Routes = [
       {
         path: 'profile',
         loadChildren: () => import('../profile/profile.module').then( m => m.ProfilePageModule)
+      },
+      {
+        path: 'editar-profile',
+        loadChildren: () => import('../editar-profile/editar-profile.module').then( m => m.EditarProfilePageModule)
       }
     ]
   }

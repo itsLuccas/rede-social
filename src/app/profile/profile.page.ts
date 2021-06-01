@@ -31,10 +31,9 @@ import { Observable } from 'rxjs';
 })
 export class ProfilePage implements OnInit {
 
-  
   public nCols: 3 | 1;
   public userPosts: Observable<any>;
-
+  public users: Observable<any>;
   
 
   // view child para ver as ids do css
@@ -49,6 +48,8 @@ export class ProfilePage implements OnInit {
    async accessDoc() {
     // pegando os posts do usuário logado!    
     const posts = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
+    const users = this.afStore.collection<any>(`users/`);
+    this.users = users.valueChanges();
     //const posts = this.afStore.doc(`users/${await this.storage.get('id')}`).get();
     // é um observador, serve para pegar as alterações de posts quando um novo post é realizado, por isso o valueChanges()
     // retorna o doc "posts" do usuário
@@ -106,7 +107,6 @@ export class ProfilePage implements OnInit {
       cancelButtonText: 'Não, cancelar.',
       cancelButtonColor: '#d33',
       reverseButtons: true,
-      backdrop: false,
       position: 'center-start'
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -152,7 +152,6 @@ export class ProfilePage implements OnInit {
       title: 'Avatar atualizado',
       showConfirmButton: false,
       timer: 1500,
-      backdrop: false
     })
   }
   

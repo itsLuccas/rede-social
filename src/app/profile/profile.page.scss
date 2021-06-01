@@ -50,5 +50,20 @@ h4 {
 
 .input-file {
     display: none;
-  }
+}
 
+#icone-alteracao {
+    margin-left: 7px;
+    margin-top: 1px;
+}
+
+#btn-editar-perfil {
+    margin-right: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    --background: #6fa3ff;
+    --border-width: 20px;
+    --border-color: black;
+    color: white;
+    text-transform: none;
+}

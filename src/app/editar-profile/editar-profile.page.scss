@@ -1,0 +1,30 @@
+#icone-salvar {
+    font-size: 30px;
+    margin-right: 10px;
+    color: #6fa3ff;
+    margin-top: 10px;
+}
+
+.input-file {
+    display: none;
+}
+
+.centraliza {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.profile-avatar {
+    margin-top: 50px;
+    width: 100px;
+    height: 100px;
+}
+
+#btn-alterar-foto {
+    --background: white;
+    --color: #6fa3ff;
+    --box-shadow: none;
+    text-transform: none;
+}

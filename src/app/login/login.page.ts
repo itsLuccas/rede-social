@@ -79,7 +79,6 @@ export class LoginPage implements OnInit {
       Swal.fire({
         icon: 'success',
         title: 'Logado!',
-        backdrop: false,
         position: "center-start"
       });
         
@@ -93,7 +92,6 @@ export class LoginPage implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Usuário não encontrado!',
-          backdrop: false,
           position: "center-start",
           didOpen: () => {
             Swal.hideLoading()
@@ -103,7 +101,6 @@ export class LoginPage implements OnInit {
         Swal.fire({
           icon: 'warning',
           title: 'Campo senha não preenchido.',
-          backdrop: false,
           position: "center-start",
           didOpen: () => {
             Swal.hideLoading()
@@ -113,7 +110,6 @@ export class LoginPage implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Senha incorreta!',
-          backdrop: false,
           position: "center-start",
           didOpen: () => {
             Swal.hideLoading()
@@ -124,7 +120,6 @@ export class LoginPage implements OnInit {
         Swal.fire({
           icon: 'warning',
           title: 'Campo usuário não preenchido.',
-          backdrop: false,
           position: "center-start",
           didOpen: () => {
             Swal.hideLoading()

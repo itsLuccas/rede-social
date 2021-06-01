@@ -13,24 +13,27 @@
     <ion-row>
         <ion-col style="text-align: -webkit-center;">
             <ion-avatar class="profile-avatar">
-                <input  class="input-file" type="file" (change)="fileChanged($event)" #fileButton/>   
-                <img src="https://ucarecdn.com/{{ (userPosts | async)?.avatar }}/" (click)="uploadFile()"/> 
+                <input class="input-file" type="file" (change)="fileChanged($event)" #fileButton/>
+                <img src="https://ucarecdn.com/{{ (userPosts | async)?.avatar }}/" (click)="uploadFile()" />
             </ion-avatar>
         </ion-col>
         <ion-col class="ion-text-center">
-            <h4 style=" margin-bottom: 2px;">30</h4>
+            <h4 style=" margin-bottom: 2px;">{{(userPosts | async)?.posts.length}}</h4>
             <p class="info-profile">Publicações</p>
         </ion-col>
         <ion-col class="ion-text-center">
-            <h4 style=" margin-bottom: 2px;">100</h4>
+            <h4 style=" margin-bottom: 2px;">{{(users | async)?.length}}</h4>
             <p class="info-profile">Amigos</p>
         </ion-col>
     </ion-row>
 
-    <!-- bibliografia -->
-    <div id="bibliografia" class="ion-padding-start">
+    <!-- biografia -->
+    <div class="ion-padding-start">
         <b>{{(userPosts | async)?.username}}</b>
-        <p class="ion-no-margin">eu sou linda e muito hidratadah, é sobre isso</p>
+        <div *ngIf="(userPosts | async)?.biografia !== undefined">
+            <p class="ion-no-margin">{{ (userPosts | async)?.biografia }}</p>
+        </div>
+        <ion-button routerLink="../editar-profile" expand="block" size="small" id="btn-editar-perfil">Editar perfil</ion-button>
     </div>
 
     <hr class="hr">

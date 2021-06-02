@@ -9,70 +9,85 @@
         <div class="image" *ngFor="let user of (allUsers | async); let i = index">
             <ion-card *ngIf="user.posts !== undefined">
                 <div *ngIf="user.posts.length !== 0">
-                    <ion-grid>
+                    <div *ngIf="skeleton == false">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="2">
+                                    <ion-avatar id="avatar">
+                                        <img src="https://ucarecdn.com/{{ user.avatar }}/-/scale_crop/350x350/center/">
+                                    </ion-avatar>
+                                </ion-col>
+
+                                <ion-col>
+                                    <ion-icon id="ellipsis" name="ellipsis-horizontal-sharp"></ion-icon>
+                                    <p class="username"> {{ user.username }} </p>
+
+
+                                    <p *ngIf="user.posts[user.posts.length-1].date" class="post-date">{{
+                                        user.posts[user.posts.length-1].date }} •</p>
+                                    <ion-icon id="globe" name="planet-outline"></ion-icon>
+                                </ion-col>
+
+                            </ion-row>
+                        </ion-grid>
+
+                        <hr class="hr">
+                        <div class="user-desc">
+                            <p *ngIf="user.posts">{{ user.posts[user.posts.length-1].desc }}</p>
+                        </div>
+                        <ion-img *ngIf="user.posts"
+                            src="https://ucarecdn.com/{{ user.posts[user.posts.length-1].imagem }}/-/resize/400x/">
+                        </ion-img>
                         <ion-row>
-                            <ion-col size="2">
-                                <ion-avatar id="avatar">
-                                    <img src="https://ucarecdn.com/{{ user.avatar }}/-/scale_crop/350x350/center/">
+
+                            <ion-col size="1">
+                                <ion-avatar class="reactions" id="first-reaction">
+                                    <img src="https://img.icons8.com/cotton/64/ffffff/thumb-up--v1.png" />
                                 </ion-avatar>
                             </ion-col>
 
-                            <ion-col>
-                                <ion-icon id="ellipsis" name="ellipsis-horizontal-sharp"></ion-icon>
-                                <p class="username"> {{ user.username }} </p>
+                            <ion-col size="1">
+                                <ion-avatar class="reactions">
+                                    <img
+                                        src="https://img.icons8.com/cotton/64/ffffff/smiling-face-with-hearts-icon.png" />
+                                </ion-avatar>
+                            </ion-col>
 
+                            <ion-col size="6">
+                                <p class="reactions-data">{{i + 1}} reações</p>
+                            </ion-col>
 
-                                <p *ngIf="user.posts[user.posts.length-1].date" class="post-date">{{ user.posts[user.posts.length-1].date }} •</p>
-                                <ion-icon id="globe" name="planet-outline"></ion-icon>
+                            <ion-col size="4">
+                                <p class="reactions-data">{{i * 2 + 1}} comentários</p>
                             </ion-col>
 
                         </ion-row>
-                    </ion-grid>
+                        <hr class="hr">
 
-                    <hr class="hr">
-                    <div class="user-desc">
-                        <p *ngIf="user.posts">{{ user.posts[user.posts.length-1].desc }}</p>
+                        <ion-row>
+                            <ion-col size="6">
+                                <ion-button class="button-reaction-comment" expand="block" fill="clear">
+                                    <img src="https://img.icons8.com/cotton/25/ffffff/thumb-up--v1.png" />
+                                    <p class="like-subtitle">Curtir</p>
+                                </ion-button>
+                            </ion-col>
+                            <ion-col size="6">
+                                <ion-button class="button-reaction-comment" expand="block" fill="clear">
+                                    <img src="https://img.icons8.com/office/20/ffffff/comments.png" />
+                                    <p class="like-subtitle">Comentar</p>
+                                </ion-button>
+                            </ion-col>
+                        </ion-row>
                     </div>
-                    <ion-img *ngIf="user.posts" src="https://ucarecdn.com/{{ user.posts[user.posts.length-1].imagem }}/-/resize/400x/"></ion-img>
-                    <ion-row>
+                    <div *ngIf="skeleton == true">
+                        <div class="ion-padding custom-skeleton">
+                            <ion-skeleton-text animated style="width: 50px; height: 50px;"></ion-skeleton-text>
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                            <ion-skeleton-text animated style="width: 100%; height: 350px;"></ion-skeleton-text>
+                            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                          </div>
+                    </div>
 
-                        <ion-col size="1">
-                            <ion-avatar class="reactions" id="first-reaction">
-                                <img src="https://img.icons8.com/cotton/64/ffffff/thumb-up--v1.png" />
-                            </ion-avatar>
-                        </ion-col>
-
-                        <ion-col size="1">
-                            <ion-avatar class="reactions">
-                                <img src="https://img.icons8.com/cotton/64/ffffff/smiling-face-with-hearts-icon.png" />
-                            </ion-avatar>
-                        </ion-col>
-
-                        <ion-col size="6">
-                            <p class="reactions-data">{{i + 1}} reações</p>
-                        </ion-col>
-
-                        <ion-col size="4">
-                            <p class="reactions-data">{{i * 2 + 1}} comentários</p>
-                        </ion-col>
-
-                    </ion-row>
-                    <hr class="hr">
-
-                    <ion-row>
-                        <ion-col size="6">
-                            <ion-button class="button-reaction-comment" expand="block" fill="clear">
-                                <img src="https://img.icons8.com/cotton/25/ffffff/thumb-up--v1.png" />
-                                <p class="like-subtitle">Curtir</p>
-                            </ion-button>
-                        </ion-col>
-                        <ion-col size="6">
-                            <ion-button class="button-reaction-comment" expand="block" fill="clear">
-                                <img src="https://img.icons8.com/office/20/ffffff/comments.png" />
-                                <p class="like-subtitle">Comentar</p>
-                            </ion-button>
-                        </ion-col>
-                    </ion-row>
                 </div>
             </ion-card>
         </div>

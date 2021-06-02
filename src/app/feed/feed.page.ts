@@ -17,15 +17,23 @@ import { Observable } from 'rxjs';
 export class FeedPage implements OnInit {
 
   allUsers: Observable<any[]>;
-  teste: string
-  
-  constructor(private afStore: AngularFirestore, private user: UserService, private router: ActivatedRoute) {  
-    this.router.params.subscribe(() => {      
-      const users = this.afStore.collection<any>(`users/`);       
+  skeleton: boolean = true;
+
+  constructor(private afStore: AngularFirestore, private user: UserService, private router: ActivatedRoute) {
+    this.skeleton = true;
+    this.router.params.subscribe(async () => {
+      this.skeleton = true;
+      const users = this.afStore.collection<any>('users/');
       this.allUsers = users.valueChanges();
-    });    
+      await this.delay(1000);
+      this.skeleton = false;
+    });
   }
 
-  ngOnInit() {        
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms));
+  }
+
+  ngOnInit() {
   }
 }

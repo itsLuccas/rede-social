@@ -83,7 +83,7 @@ export class LoginPage implements OnInit {
       });
         
       // Depois do login, fazemos o roteamento para a página principal 
-        this.router.navigate(['/tabs']);
+        this.router.navigate(['/tabs/feed']);
       }
       
     } catch(err) {

@@ -18,7 +18,7 @@ import { firestore } from 'firebase';
 import { AlertController } from '@ionic/angular';
 
 // Serve para fechar o menu, após clicar em "Sair()"
-import { MenuController } from '@ionic/angular'; 
+import { MenuController } from '@ionic/angular';
 
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
@@ -35,18 +35,18 @@ export class ProfilePage implements OnInit {
   public nCols: 3 | 1;
   public userPosts: Observable<any>;
   public users: Observable<any>;
-  
+
 
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;
 
   constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, public router: Router, private aRoute: ActivatedRoute, private menu: MenuController, private alert: AlertService) {
     this.aRoute.params.subscribe(() => {
-      this.accessDoc();       
+      this.accessDoc();
     })
   }
 
-   async accessDoc() {
+  async accessDoc() {
     // pegando os posts do usuário logado!    
     const posts = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
     const users = this.afStore.collection<any>(`users/`);
@@ -54,17 +54,17 @@ export class ProfilePage implements OnInit {
     //const posts = this.afStore.doc(`users/${await this.storage.get('id')}`).get();
     // é um observador, serve para pegar as alterações de posts quando um novo post é realizado, por isso o valueChanges()
     // retorna o doc "posts" do usuário
-    this.userPosts = posts.valueChanges();    
-   }
+    this.userPosts = posts.valueChanges();
+  }
 
-   sair() {    
-    this.storage.remove('id'); 
+  sair() {
+    this.storage.remove('id');
     this.menu.close();
     this.router.navigate(['/login']);
-   }
+  }
 
-   delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms));
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 
@@ -72,10 +72,10 @@ export class ProfilePage implements OnInit {
     this.fileButton.nativeElement.click();
   }
 
-  
-  deleteImg(a: string, b: string, c: string){
+
+  deleteImg(a: string, b: string, c: string) {
     let obj
-    if(c === undefined) {
+    if (c === undefined) {
       obj = {
         imagem: a,
         desc: b
@@ -89,13 +89,13 @@ export class ProfilePage implements OnInit {
     }
 
     const swalWithBootstrapButtons = this.alert.mixin();
-    
+
     this.alert.fire(swalWithBootstrapButtons, 'Você deseja deletar esse post?').then(async (result) => {
       if (result.isConfirmed) {
         this.afStore.doc(`users/${await this.storage.get('id')}`).update({
-          posts: firestore.FieldValue.arrayRemove(obj)      
-        }); 
-        swalWithBootstrapButtons.fire(                    
+          posts: firestore.FieldValue.arrayRemove(obj)
+        });
+        swalWithBootstrapButtons.fire(
           'Deletado!',
         )
       } else if (
@@ -111,27 +111,31 @@ export class ProfilePage implements OnInit {
 
   fileChanged(event) {
     const files = event.target.files;
-    
+
 
     // Criando uma estrutura de dados para publicar na API do uploadcare!
     const data = new FormData();
-    
+
     data.append('file', files[0]);
     data.append('UPLOADCARE_PUB_KEY', 'b6677f56876ab7996079');
     data.append('UPLOADCARE_STORE', '1');
-    
+
     // Tenho que descobrir o que significa isso!!!!!
     this.http.post('https://upload.uploadcare.com/base/', data)
-    .subscribe(async event => {      
-      this.afStore.doc(`/users/${await this.storage.get('id')}`).update({      
-        // ATUALIZA IMG DE AVATAR
-        avatar: JSON.parse(JSON.stringify(event)).file
-      }) 
-    })
+      .subscribe(async event => {
+        this.afStore.doc(`/users/${await this.storage.get('id')}`).update({
+          // ATUALIZA IMG DE AVATAR
+          avatar: JSON.parse(JSON.stringify(event)).file
+        })
+      })
     this.alert.success('Avatar atualizado');
   }
-  
-  ngOnInit() {    
+
+  zoom(url: string, desc: string) {
+    this.alert.zoom(`https://ucarecdn.com/${url}/`, desc);
+  }
+
+  ngOnInit() {
   }
 
 

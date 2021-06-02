@@ -67,6 +67,14 @@ export class AlertService {
         })
     }
 
+    zoom(url: string, desc: string) {
+        Swal.fire({
+            imageUrl: url,
+            imageAlt: 'Custom image',
+            text: desc
+        })
+    }
+
     mixin() {
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {

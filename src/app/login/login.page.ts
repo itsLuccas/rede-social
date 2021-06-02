@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 
 //Importando o serviço que define a classe usuário, criada anteriormente!
 import { UserService } from '../user.service';
+import { AlertService } from '../alert.service';
 
 // Importando o serviço de roteamento do próprio angular
 import { Router } from '@angular/router';
@@ -28,7 +29,7 @@ export class LoginPage implements OnInit {
 
   
   // instânciando o usuário no construtor, assim como os recursos do firebase
-  constructor(public afAuth: AngularFireAuth, public user: UserService, public router: Router, private storage: Storage) { }
+  constructor(public afAuth: AngularFireAuth, public user: UserService, public router: Router, private storage: Storage, private alert:AlertService) { }
 
   ngOnInit() {
   }
@@ -76,11 +77,7 @@ export class LoginPage implements OnInit {
         //window.localStorage.setItem('id', res.user.uid); 
 
       //Mostrando um alerta de sucesso!
-      Swal.fire({
-        icon: 'success',
-        title: 'Logado!',
-        position: "center-start"
-      });
+      this.alert.success("Logado!");
         
       // Depois do login, fazemos o roteamento para a página principal 
         this.router.navigate(['/tabs/feed']);
@@ -89,46 +86,16 @@ export class LoginPage implements OnInit {
     } catch(err) {
       console.dir(err);
       if(err.code == "auth/user-not-found") {
-        Swal.fire({
-          icon: 'error',
-          title: 'Usuário não encontrado!',
-          position: "center-start",
-          didOpen: () => {
-            Swal.hideLoading()
-          }
-        });
+        this.alert.error("O usuário não foi encontrado");
       }else if(this.password === ''){
-        Swal.fire({
-          icon: 'warning',
-          title: 'Campo senha não preenchido.',
-          position: "center-start",
-          didOpen: () => {
-            Swal.hideLoading()
-          }
-        });
+        this.alert.warning("Campo senha não preenchido.");
       }else if(err.code == "auth/wrong-password"){
-        Swal.fire({
-          icon: 'error',
-          title: 'Senha incorreta!',
-          position: "center-start",
-          didOpen: () => {
-            Swal.hideLoading()
-          }
-        });
+        this.alert.error("Senha incorreta!");
         console.log(this.password);
       }else if(err.code == "auth/invalid-email"){
-        Swal.fire({
-          icon: 'warning',
-          title: 'Campo usuário não preenchido.',
-          position: "center-start",
-          didOpen: () => {
-            Swal.hideLoading()
-          }
-        });
+        this.alert.warning("Campo usuário não preenchido.");
       }
     }
-    
-    
   } 
   
   register() {

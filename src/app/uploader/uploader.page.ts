@@ -24,6 +24,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
+import { AlertService } from '../alert.service';
 
 
 
@@ -46,79 +47,58 @@ export class UploaderPage implements OnInit {
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;
 
-  constructor(private storage: Storage, public http: HttpClient, public afStore: AngularFirestore, public user: UserService, public alert: AlertController, public datePipe: DatePipe, private aRoute: ActivatedRoute) {
+  constructor(private storage: Storage, public http: HttpClient, public afStore: AngularFirestore, public user: UserService, public alert: AlertService, public datePipe: DatePipe, private aRoute: ActivatedRoute) {
     this.aRoute.params.subscribe(async () => {
       const fireUser = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
       this.userData = fireUser.valueChanges();
-      this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);        
+      this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);
     })
-   }
+  }
 
-  ngOnInit() { 
+  ngOnInit() {
   }
 
   async postar() {
     // armazena a URL da imagem que teve seu upload feito no uploadcare
     const imagem = this.imageURL;
-    
+
     const date = this.datePipe.transform(new Date(), 'medium');
 
     // armazena a descrição feita no post
     let desc = this.desc;
-    if(!desc) {
+    if (!desc) {
       desc = " ";
-    }      
-    
+    }
+
     // acessamos o documento armazenado no banco de dados a partir do id do usuário atual e...
     // ...realizamos o update do doc com as informações de url e descrição    
     this.afStore.doc(`users/${await this.storage.get('id')}`).set({
       posts: firestore.FieldValue.arrayUnion({
-        imagem, 
+        imagem,
         desc,
         date
       })
-    }, {merge: true});
+    }, { merge: true });
 
-    Swal.fire({
-      title: 'Sucesso!',
-      imageUrl: `https://ucarecdn.com/${this.imageURL}/`,
-      imageAlt: 'Custom image',
-      icon: 'success'
-    })
+    this.alert.image(`https://ucarecdn.com/${this.imageURL}/`);
 
     this.imageURL = null;
 
     //Reponsável por armazenar a água bebida
     this.storage.set(`litrosHj_${await this.storage.get('id')}`, await this.storage.get(`litrosHj_${await this.storage.get('id')}`) + this.rangeValue);
     await this.delay(1000);
-    this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);       
+    this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);
   }
 
   async resetAgua() {
 
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: true
-    })
-    
-    swalWithBootstrapButtons.fire({
-      title: 'Você deseja resetar a quantidade de água ingerida hoje?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sim, deletar.',
-      confirmButtonColor: '#00cc00',
-      cancelButtonText: 'Não, cancelar.',
-      cancelButtonColor: '#d33',
-      reverseButtons: true,
-      position: 'center-start'
-    }).then(async (result) => {
+    const swalWithBootstrapButtons = this.alert.mixin();
+
+    this.alert.fire(swalWithBootstrapButtons, 'Você deseja resetar a quantidade de água ingerida hoje?').then(async (result) => {
       if (result.isConfirmed) {
         this.storage.set(`litrosHj_${await this.storage.get('id')}`, 0);
         this.aguaDia = 0;
-        swalWithBootstrapButtons.fire(                    
+        swalWithBootstrapButtons.fire(
           'Quantidade consumida de água resetada!',
         )
       } else if (
@@ -133,42 +113,30 @@ export class UploaderPage implements OnInit {
   }
 
   delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   uploadFile() {
-   this.fileButton.nativeElement.click();   
+    this.fileButton.nativeElement.click();
   }
 
   fileChanged(event) {
-    const files = event.target.files;   
-    
+    const files = event.target.files;
+
     // Criando uma estrutura de dados para publicar na API do uploadcare!
     const data = new FormData();
     data.append('file', files[0]);
     data.append('UPLOADCARE_PUB_KEY', 'b6677f56876ab7996079');
     data.append('UPLOADCARE_STORE', '1');
-    
+
     //algumas public keys
     // - luccas b43fb80af5560135229d
     // - xofanna b6677f56876ab7996079
 
     // Tenho que descobrir o que significa isso!!!!!
     this.http.post('https://upload.uploadcare.com/base/', data)
-    .subscribe(event => {      
-      this.imageURL = JSON.parse(JSON.stringify(event)).file;
-    })
+      .subscribe(event => {
+        this.imageURL = JSON.parse(JSON.stringify(event)).file;
+      })
   }
-
-  async showAlert(header: string, message: string) {
-    const alert = await this.alert.create({
-      header, 
-      message, 
-      buttons: ['ok']
-    }) 
-    await alert.present()
-  }
-
-  
-
 }

@@ -28,6 +28,7 @@ import { DatePipe } from '@angular/common';
 
 //
 import { IonicStorageModule } from "@ionic/storage-angular";
+import { AlertService } from './alert.service';
 
 
 
@@ -54,7 +55,7 @@ import { IonicStorageModule } from "@ionic/storage-angular";
     HttpClientModule,
     
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, UserService, DatePipe],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, UserService, DatePipe, AlertService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

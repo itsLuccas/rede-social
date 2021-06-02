@@ -22,6 +22,7 @@ import { MenuController } from '@ionic/angular';
 
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
+import { AlertService } from '../alert.service';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class ProfilePage implements OnInit {
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;
 
-  constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, public router: Router, private aRoute: ActivatedRoute, private menu: MenuController, private alert: AlertController) {
+  constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, public router: Router, private aRoute: ActivatedRoute, private menu: MenuController, private alert: AlertService) {
     this.aRoute.params.subscribe(() => {
       this.accessDoc();       
     })
@@ -86,29 +87,10 @@ export class ProfilePage implements OnInit {
         date: c
       }
     }
-    
 
+    const swalWithBootstrapButtons = this.alert.mixin();
     
-
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: true
-    })
-    
-    swalWithBootstrapButtons.fire({
-      title: 'Você deseja deletar esse post?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sim, deletar.',
-      confirmButtonColor: '#00cc00',
-      cancelButtonText: 'Não, cancelar.',
-      cancelButtonColor: '#d33',
-      reverseButtons: true,
-      position: 'center-start'
-    }).then(async (result) => {
+    this.alert.fire(swalWithBootstrapButtons, 'Você deseja deletar esse post?').then(async (result) => {
       if (result.isConfirmed) {
         this.afStore.doc(`users/${await this.storage.get('id')}`).update({
           posts: firestore.FieldValue.arrayRemove(obj)      
@@ -146,13 +128,7 @@ export class ProfilePage implements OnInit {
         avatar: JSON.parse(JSON.stringify(event)).file
       }) 
     })
-    Swal.fire({
-      position: 'top-start',
-      icon: 'success',
-      title: 'Avatar atualizado',
-      showConfirmButton: false,
-      timer: 1500,
-    })
+    this.alert.success('Avatar atualizado');
   }
   
   ngOnInit() {    

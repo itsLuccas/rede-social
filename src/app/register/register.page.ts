@@ -21,6 +21,7 @@ import { ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 import Swal from 'sweetalert2';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-register',
@@ -39,11 +40,11 @@ export class RegisterPage implements OnInit {
 
   constructor(
     public afAuth: AngularFireAuth,
-    public alert: AlertController,
     public router: Router,
     public user: UserService,
     public afStore: AngularFirestore, // essa variável permite o uso do angular firestore 
-    private storage: Storage
+    private storage: Storage,
+    private alert: AlertService
   ) { }
 
   ngOnInit() {
@@ -53,12 +54,7 @@ export class RegisterPage implements OnInit {
     const { username, password, cpassword, peso, litrosDia = peso * 0.035 } = this;
 
     if (password !== cpassword) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Senhas não coincidem!',
-        backdrop: false,
-        position: "center-start"
-      });
+      this.alert.error('Senhas não coincidem!');
       return console.error("Passwords don't match!");
     }
 
@@ -94,12 +90,7 @@ export class RegisterPage implements OnInit {
       //window.localStorage.setItem('id', res.user.uid); 
 
       //Mostrando um alerta de sucesso!
-      Swal.fire({
-        icon: 'success',
-        title: 'Sua conta foi criada!',
-        backdrop: false,
-        position: "center-start"
-      });
+      this.alert.success('Sua conta foi criada!');
 
       // usuário criado, setado e registrado no banco de dados, agoar só basta redirecionarmos a página para o menu principal
       this.router.navigate(['/tabs/feed'])
@@ -107,38 +98,16 @@ export class RegisterPage implements OnInit {
     } catch (err) {
       console.dir(err);
       if (err.code == "auth/invalid-email") {
-        Swal.fire({
-          icon: 'error',
-          title: 'Formato de username errado!',
-          backdrop: false,
-          position: "center-start"
-        });
+        this.alert.error('Formato de username errado!');
       } else if (err.code == "auth/weak-password") {
-        Swal.fire({
-          icon: 'warning',
-          title: 'A senha deve ter no mínimo 6 caracteres!',
-          backdrop: false,
-          position: "center-start"
-        });
+        this.alert.warning('A senha deve ter no mínimo 6 caracteres!');
       } else if (err.code == "auth/email-already-in-use") {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Esse username já está sendo utilizado!',
-          backdrop: false,
-          position: "center-start"
-        });
+        this.alert.warning('Esse username já está sendo utilizado!')
       }
     }
   }
 
   async presentExplanation() {
-    Swal.fire({
-      icon: 'question',
-      title: 'Por que precisamos do seu peso?',
-      html: "Para saber a quantidade de água exata que você precisa tomar por dia, a primeira coisa a se fazer é analisar o seu peso. O cálculo a ser feito é de 35 ml de água multiplicado pelo peso corporal de cada um. Então vamos levar em consideração uma pessoa que pese 60 kg e não sabe quanta água ela precisa tomar por dia. A conta seria a seguinte: 60 x 0,035 = 2,1L",
-      backdrop: false,
-      position: "center-start"
-    })
+    this.alert.question('Por que precisamos do seu peso?', "Para saber a quantidade de água exata que você precisa tomar por dia, a primeira coisa a se fazer é analisar o seu peso. O cálculo a ser feito é de 35 ml de água multiplicado pelo peso corporal de cada um. Então vamos levar em consideração uma pessoa que pese 60 kg e não sabe quanta água ela precisa tomar por dia. A conta seria a seguinte: 60 x 0,035 = 2,1L");
   }
-
 }

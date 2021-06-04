@@ -72,6 +72,15 @@ export class AlertService {
         })
     }
 
+    zoomBadge(url: string, desc: string) {
+        Swal.fire({
+            imageUrl: url,
+            imageAlt: 'Custom image',
+            text: desc,
+            heightAuto: true
+        })
+    }
+
     mixin() {
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {

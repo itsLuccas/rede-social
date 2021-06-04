@@ -21,6 +21,8 @@ export class EditarProfilePage implements OnInit {
   public userPosts: Observable<any>;
   public username;
   public biografia;
+  public peso;
+  public litrosDia;
 
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;;
@@ -81,6 +83,20 @@ export class EditarProfilePage implements OnInit {
     } else {
       this.afStore.doc(`users/${await this.storage.get('id')}`).set({
         biografia: this.biografia,
+      }, { merge: true })
+      this.alert.success('Alteração feita com sucesso!');
+    }
+
+  }
+
+  public async salvarPeso() {
+    if (this.peso === undefined) {
+      this.alert.error('Campo peso vazio!');
+    } else {
+      this.litrosDia = this.peso * 0.035;
+      this.afStore.doc(`users/${await this.storage.get('id')}`).set({
+        litrosDia: this.litrosDia,
+        peso: this.peso,
       }, { merge: true })
       this.alert.success('Alteração feita com sucesso!');
     }

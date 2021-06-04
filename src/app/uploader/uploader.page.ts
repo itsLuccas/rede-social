@@ -48,14 +48,16 @@ export class UploaderPage implements OnInit {
   @ViewChild('fileButton') fileButton;
 
   constructor(private storage: Storage, public http: HttpClient, public afStore: AngularFirestore, public user: UserService, public alert: AlertService, public datePipe: DatePipe, private aRoute: ActivatedRoute) {
-    this.aRoute.params.subscribe(async () => {
-      const fireUser = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
-      this.userData = fireUser.valueChanges();
-      this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);
-    })
+    
   }
 
   ngOnInit() {
+  }
+
+  async ionViewWillEnter() {
+      const fireUser = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
+      this.userData = fireUser.valueChanges();
+      this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);
   }
 
   async postar() {
@@ -91,7 +93,6 @@ export class UploaderPage implements OnInit {
   }
 
   async resetAgua() {
-
     const swalWithBootstrapButtons = this.alert.mixin();
 
     this.alert.fire(swalWithBootstrapButtons, 'Você deseja resetar a quantidade de água ingerida hoje?').then(async (result) => {

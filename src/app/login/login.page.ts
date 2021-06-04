@@ -38,17 +38,6 @@ export class LoginPage implements OnInit {
   async login() {
 
     const { username, password, peso } = this
-    Swal.fire({
-      title: 'Carregando',
-      imageUrl: 'https://imagehost7.online-image-editor.com/oie_upload/images/19221816vy632/oie_canvas.png',
-      timer: 2500,
-      timerProgressBar: true,
-      backdrop: false,
-      position: 'center-start',
-      didOpen: () => {
-        Swal.showLoading()
-      }
-    })
     
     try {
       // Mandando a famosa gambiarra, pq o login é feito com email!!!!

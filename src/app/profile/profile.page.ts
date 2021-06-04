@@ -15,7 +15,7 @@ import { HttpClient } from '@angular/common/http'
 
 
 import { firestore } from 'firebase';
-import { AlertController } from '@ionic/angular';
+
 
 // Serve para fechar o menu, após clicar em "Sair()"
 import { MenuController } from '@ionic/angular';
@@ -23,6 +23,7 @@ import { MenuController } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
 import { AlertService } from '../alert.service';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -41,16 +42,17 @@ export class ProfilePage implements OnInit {
   @ViewChild('fileButton') fileButton;
 
   constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, public router: Router, private aRoute: ActivatedRoute, private menu: MenuController, private alert: AlertService) {
-    this.aRoute.params.subscribe(() => {
-      this.accessDoc();
-    })
+    const users = this.afStore.collection<any>(`users/`);
+    this.users = users.valueChanges();
+  }
+
+  ionViewWillEnter() {
+    this.accessDoc();
   }
 
   async accessDoc() {
     // pegando os posts do usuário logado!    
     const posts = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
-    const users = this.afStore.collection<any>(`users/`);
-    this.users = users.valueChanges();
     //const posts = this.afStore.doc(`users/${await this.storage.get('id')}`).get();
     // é um observador, serve para pegar as alterações de posts quando um novo post é realizado, por isso o valueChanges()
     // retorna o doc "posts" do usuário

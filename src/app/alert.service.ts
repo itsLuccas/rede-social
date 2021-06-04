@@ -24,8 +24,7 @@ export class AlertService {
             title: titulo,
             backdrop: true,
             position: "center-start",
-            showConfirmButton: true,
-            timer: 1500,
+            showConfirmButton: true,            
             didOpen: () => {
                 Swal.hideLoading()
             }
@@ -38,8 +37,7 @@ export class AlertService {
             title: titulo,
             backdrop: true,
             position: "center-start",
-            showConfirmButton: true,
-            timer: 1500,
+            showConfirmButton: true,            
             didOpen: () => {
                 Swal.hideLoading()
             }
@@ -53,8 +51,7 @@ export class AlertService {
             html: conteudo,
             backdrop: true,
             position: "center-start",
-            showConfirmButton: true,
-            timer: 1500,
+            showConfirmButton: true,            
         })
     }
 

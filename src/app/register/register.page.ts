@@ -58,6 +58,11 @@ export class RegisterPage implements OnInit {
       return console.error("Passwords don't match!");
     }
 
+    if (peso === undefined || username === undefined || password === undefined || cpassword === undefined) {
+      this.alert.error('Por favor, preencha todos os campos.');
+      return console.error("Peso erro!!!!!");
+    }
+
     try {
       // uso da variável afAuth que permite a autenticação do usuário
       const res = await this.afAuth.createUserWithEmailAndPassword(username + '@luccas.com', password);
@@ -76,7 +81,7 @@ export class RegisterPage implements OnInit {
         this.user.setUser({
           username,
           uid: res.user.uid,
-          peso
+          peso          
         })
       }
 

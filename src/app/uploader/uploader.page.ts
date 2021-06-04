@@ -103,7 +103,7 @@ export class UploaderPage implements OnInit {
   async resetAgua() {
     const swalWithBootstrapButtons = this.alert.mixin();
 
-    this.alert.fire(swalWithBootstrapButtons, 'Você deseja resetar a quantidade de água ingerida hoje?').then(async (result) => {
+    this.alert.fire(swalWithBootstrapButtons, 'Você deseja resetar a quantidade de água ingerida hoje?', 'Sim, resetar.').then(async (result) => {
       if (result.isConfirmed) {
         this.storage.set(`litrosHj_${await this.storage.get('id')}`, 0);
         this.aguaDia = 0;

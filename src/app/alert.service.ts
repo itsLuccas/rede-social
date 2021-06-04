@@ -83,12 +83,12 @@ export class AlertService {
         return swalWithBootstrapButtons;
     }
 
-    fire(swalWithBootstrapButtons: any, titulo: string) {
+    fire(swalWithBootstrapButtons: any, titulo: string, btnConfirm: string) {
         return swalWithBootstrapButtons.fire({
             title: titulo,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Sim, deletar.',
+            confirmButtonText: btnConfirm,
             confirmButtonColor: '#00cc00',
             cancelButtonText: 'Não, cancelar.',
             cancelButtonColor: '#d33',

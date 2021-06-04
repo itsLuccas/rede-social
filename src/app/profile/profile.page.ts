@@ -92,7 +92,7 @@ export class ProfilePage implements OnInit {
 
     const swalWithBootstrapButtons = this.alert.mixin();
 
-    this.alert.fire(swalWithBootstrapButtons, 'Você deseja deletar esse post?').then(async (result) => {
+    this.alert.fire(swalWithBootstrapButtons, 'Você deseja deletar esse post?', 'Sim, deletar.').then(async (result) => {
       if (result.isConfirmed) {
         this.afStore.doc(`users/${await this.storage.get('id')}`).update({
           posts: firestore.FieldValue.arrayRemove(obj)

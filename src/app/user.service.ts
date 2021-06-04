@@ -15,6 +15,7 @@ interface user {
 // definindo a classe usuário
 export class UserService {
     private user: user;
+    public username: string;
 
     constructor(private afAuth: AngularFireAuth) {
 

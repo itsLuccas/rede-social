@@ -34,7 +34,10 @@
             <img src="https://ucarecdn.com/{{imageURL}}/" />
             <ion-card-content>
                 <ion-textarea placeholder="digite qualquer coisa" [(ngModel)]="desc"></ion-textarea>
-                <ion-button (click)="postar()">POST</ion-button>
+                <div>
+                    <input #myControl [value]="(userData | async)?.aguaTotalConsumida" type="hidden"/>
+                    <ion-button (click)="postar(myControl.value)">POST</ion-button>
+                </div>
             </ion-card-content>
         </ion-card>
     </div>

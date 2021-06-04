@@ -25,6 +25,7 @@ import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
 import { AlertService } from '../alert.service';
+import { map } from 'rxjs/operators';
 
 
 
@@ -60,7 +61,11 @@ export class UploaderPage implements OnInit {
       this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);
   }
 
-  async postar() {
+  async postar(aguaTotal: any) {
+    if(aguaTotal === undefined || aguaTotal == null || aguaTotal == "undefined"){
+      aguaTotal = 0;
+    } 
+
     // armazena a URL da imagem que teve seu upload feito no uploadcare
     const imagem = this.imageURL;
 
@@ -79,7 +84,8 @@ export class UploaderPage implements OnInit {
         imagem,
         desc,
         date
-      })
+      }),
+      aguaTotalConsumida: (parseInt(aguaTotal) + this.rangeValue)
     }, { merge: true });
 
     this.alert.image(`https://ucarecdn.com/${this.imageURL}/`);
@@ -90,6 +96,8 @@ export class UploaderPage implements OnInit {
     this.storage.set(`litrosHj_${await this.storage.get('id')}`, await this.storage.get(`litrosHj_${await this.storage.get('id')}`) + this.rangeValue);
     await this.delay(1000);
     this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);
+    
+    this.desc = ""
   }
 
   async resetAgua() {

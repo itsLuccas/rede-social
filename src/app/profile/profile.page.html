@@ -13,7 +13,7 @@
     <ion-row>
         <ion-col style="text-align: -webkit-center;">
             <ion-avatar class="profile-avatar">
-                <input class="input-file" type="file" (change)="fileChanged($event)" #fileButton/>
+                <input class="input-file" type="file" (change)="fileChanged($event)" #fileButton />
                 <img src="https://ucarecdn.com/{{ (userPosts | async)?.avatar }}/" (click)="uploadFile()" />
             </ion-avatar>
         </ion-col>
@@ -33,32 +33,38 @@
         <div *ngIf="(userPosts | async)?.biografia !== undefined">
             <p class="ion-no-margin">{{ (userPosts | async)?.biografia }}</p>
         </div>
-        <ion-button routerLink="../editar-profile" expand="block" size="small" id="btn-editar-perfil">Editar perfil</ion-button>
+        <ion-button routerLink="../editar-profile" expand="block" size="small" id="btn-editar-perfil">Editar perfil
+        </ion-button>
     </div>
 
     <hr class="hr">
 
+    <p>
+        {{(userPosts | async)?.aguaTotalConsumida}}
+    </p>
     <!-- conquistas -->
     <b class="ion-margin-start" style="margin-bottom: 0px;">Conquistas</b>
     <ion-row id="conquest">
-        <ion-col>
-            <img src="https://img.icons8.com/clouds/50/000000/water.png" />
-        </ion-col>
-        <ion-col>
-            <img src="https://img.icons8.com/clouds/50/000000/drink-time.png" />
-        </ion-col>
-        <ion-col>
-            <img src="https://img.icons8.com/clouds/50/000000/water-cooler.png" />
-        </ion-col>
-        <ion-col>
-            <img src="https://img.icons8.com/clouds/50/000000/kawaii-soda.png" />
-        </ion-col>
-        <ion-col>
-            <img src="https://img.icons8.com/bubbles/50/000000/water.png" />
-        </ion-col>
-        <ion-col>
-            <img src="https://img.icons8.com/bubbles/50/000000/water-cooler.png" />
-        </ion-col>
+        <div *ngIf="(userPosts | async)?.aguaTotalConsumida !== undefined">
+            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 1000">
+                <img style="display:show" src="https://img.icons8.com/clouds/50/000000/water.png" />
+            </ion-col>
+            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 2000">
+                <img style="display:show" src="https://img.icons8.com/clouds/50/000000/drink-time.png" />
+            </ion-col>
+            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 3000">
+                <img style="display:show" src="https://img.icons8.com/clouds/50/000000/water-cooler.png" />
+            </ion-col>
+            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 4000">
+                <img style="display:show" src="https://img.icons8.com/clouds/50/000000/kawaii-soda.png" />
+            </ion-col>
+            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 5000">
+                <img style="display:show" src="https://img.icons8.com/bubbles/50/000000/water.png" />
+            </ion-col>
+            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 6000">
+                <img style="display:show" src="https://img.icons8.com/bubbles/50/000000/water-cooler.png" />
+            </ion-col>
+        </div>
     </ion-row>
 
     <hr style="margin-top: 0px;" class="hr">
@@ -77,8 +83,10 @@
     <ion-row id="images">
         <ion-col [size]="12/nCols" class="image" *ngFor="let post of ((userPosts | async)?.posts); let i = index">
             <ion-card>
-                <ion-icon (click)="deleteImg(post.imagem, post.desc, post.date);" style="padding-left: 4px;" name="close-circle"></ion-icon>
-                <ion-img src="https://ucarecdn.com/{{ post.imagem }}/-/scale_crop/400x400/center/" (click)="zoom(post.imagem, post.desc)"></ion-img>
+                <ion-icon (click)="deleteImg(post.imagem, post.desc, post.date);" style="padding-left: 4px;"
+                    name="close-circle"></ion-icon>
+                <ion-img src="https://ucarecdn.com/{{ post.imagem }}/-/scale_crop/400x400/center/"
+                    (click)="zoom(post.imagem, post.desc)"></ion-img>
             </ion-card>
         </ion-col>
     </ion-row>

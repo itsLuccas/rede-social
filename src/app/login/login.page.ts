@@ -67,7 +67,8 @@ export class LoginPage implements OnInit {
 
       //Mostrando um alerta de sucesso!
       this.alert.success("Logado!");
-        
+      this.username = "";
+      this.password = ""; 
       // Depois do login, fazemos o roteamento para a página principal 
         this.router.navigate(['/tabs/feed']);
       }

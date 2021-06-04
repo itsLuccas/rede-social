@@ -67,30 +67,32 @@ export class EditarProfilePage implements OnInit {
   }
 
   public async salvarUsuario() {
-    if (this.username === undefined) {
+    if (this.username === undefined || this.username === "") {
       this.alert.error('Campo usuário vazio!');
     } else {
       this.afStore.doc(`users/${await this.storage.get('id')}`).update({
         username: this.username,
       })
+      this.username = "";
       this.alert.success('Alteração feita com sucesso!');
     }
   }
 
   public async salvarBiografia() {
-    if (this.biografia === undefined) {
+    if (this.biografia === undefined || this.biografia === "") {
       this.alert.error('Campo biografia vazio!');
     } else {
       this.afStore.doc(`users/${await this.storage.get('id')}`).set({
         biografia: this.biografia,
       }, { merge: true })
+      this.biografia = "";
       this.alert.success('Alteração feita com sucesso!');
     }
 
   }
 
   public async salvarPeso() {
-    if (this.peso === undefined) {
+    if (this.peso === undefined || this.peso === "") {
       this.alert.error('Campo peso vazio!');
     } else {
       this.litrosDia = this.peso * 0.035;
@@ -98,6 +100,7 @@ export class EditarProfilePage implements OnInit {
         litrosDia: this.litrosDia,
         peso: this.peso,
       }, { merge: true })
+      this.peso = "";
       this.alert.success('Alteração feita com sucesso!');
     }
 

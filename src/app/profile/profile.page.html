@@ -10,6 +10,7 @@
 
 <!-- informações -->
 <ion-content id="profile" padding>
+    <div *ngIf="skeleton == false">
     <ion-row>
         <ion-col style="text-align: -webkit-center;">
             <ion-avatar class="profile-avatar">
@@ -45,7 +46,7 @@
 
     <!-- conquistas -->
     <b class="ion-margin-start" style="margin-bottom: 0px;">Conquistas</b>
-    <ion-row id="conquest">
+    <ion-row id="conquest" style="margin-bottom: 5px; margin-top: 5px;">
         <div *ngIf="(userPosts | async)?.aguaTotalConsumida !== undefined">
             <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 500">
                 <img (click)="badge(1)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/a/ab/131Lapras.png/240px-131Lapras.png" width="50" height="50"/>
@@ -91,31 +92,115 @@
             </ion-card>
         </ion-col>
     </ion-row>
+
+</div>
+<div *ngIf="skeleton == true">
+    <ion-row>
+        <ion-col>
+            <ion-skeleton-text id="skeletonavatar" class="animate-skeleton-background" animated style></ion-skeleton-text>
+        </ion-col>
+        <ion-col class="ion-text-center">
+            <h4 style=" margin-bottom: 2px;"><ion-skeleton-text id="skeletonitemstop" class="animate1" animated style></ion-skeleton-text></h4>
+            <p class="info-profile">Publicações</p>
+        </ion-col>
+        <ion-col class="ion-text-center">
+            <h4 style=" margin-bottom: 2px;"><ion-skeleton-text id="skeletonitemstop" class="animate2" animated style></ion-skeleton-text></h4>
+            <p class="info-profile">Amigos</p>
+        </ion-col>
+        <ion-col class="ion-text-center">
+            <h4 style=" margin-bottom: 2px;"><ion-skeleton-text id="skeletonitemstop" class="animate3" animated style></ion-skeleton-text></h4>
+            <p class="info-profile">Água Total</p>
+        </ion-col>
+    </ion-row>  
+
+
+     <!-- biografia -->
+     <div class="ion-padding-start">
+        <b>{{(userPosts | async)?.username}}</b>
+        <div *ngIf="(userPosts | async)?.biografia !== undefined">
+            <p class="ion-no-margin">{{ (userPosts | async)?.biografia }}</p>
+        </div>
+        <ion-skeleton-text id="skeletoneditbutton" class="animate-skeleton-background"></ion-skeleton-text>
+        
+    </div>
+
+    <hr class="hr">
+
+    <!-- conquistas -->
+    <b class="ion-margin-start" style="margin-bottom: 0px;">Conquistas</b>
+    <ion-row id="conquest">
+        
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate1" animated style></ion-skeleton-text>    
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate2" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate3" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate1" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate2" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate3" animated style></ion-skeleton-text>
+            </ion-col>
+        
+    </ion-row>
+
+    <hr style="margin-top: 0px;" class="hr">
+
+    <!-- exibição das publicações -->
+    <ion-segment>
+        <ion-segment-button>
+            <ion-icon name="grid"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button>
+            <ion-icon name="square"></ion-icon>
+        </ion-segment-button>
+    </ion-segment>
+
+    <!-- publicações -->
+    <ion-row>
+        <ion-col>
+            <ion-skeleton-text id="skeletonposts" class="animate1" animated style></ion-skeleton-text>
+        </ion-col>
+        <ion-col>
+            <ion-skeleton-text id="skeletonposts" class="animate2" animated style></ion-skeleton-text>
+        </ion-col>
+        <ion-col>
+            <ion-skeleton-text id="skeletonposts" class="animate3" animated style></ion-skeleton-text>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <ion-skeleton-text id="skeletonposts" class="animate2" animated style></ion-skeleton-text>
+        </ion-col>
+        <ion-col>
+            <ion-skeleton-text id="skeletonposts" class="animate2" animated style></ion-skeleton-text>
+        </ion-col>
+        <ion-col>
+            <ion-skeleton-text id="skeletonposts" class="animate3" animated style></ion-skeleton-text>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <ion-skeleton-text id="skeletonposts" class="animate3" animated style></ion-skeleton-text>
+        </ion-col>
+        <ion-col>
+            <ion-skeleton-text id="skeletonposts" class="animate3" animated style></ion-skeleton-text>
+        </ion-col>
+        <ion-col>
+            <ion-skeleton-text id="skeletonposts" class="animate3" animated style></ion-skeleton-text>
+        </ion-col>
+    </ion-row>
+</div>
 </ion-content>
 
 
-<ion-menu contentId="profile" menuId="profile-menu" side="end">
-    <ion-header>
-        <ion-toolbar>
-            <ion-title>profile</ion-title>
-        </ion-toolbar>
-    </ion-header>
 
-    <!-- menu com itens -->
-    <ion-content>
-        <ion-list>
-            <ion-item>
-                <ion-icon name="podium-outline"></ion-icon>
-                <ion-label class="ion-padding-start">Sua atividade</ion-label>
-            </ion-item>
-            <ion-item>
-                <ion-icon name="settings-outline"></ion-icon>
-                <ion-label class="ion-padding-start">Configurações</ion-label>
-            </ion-item>
-            <ion-item>
-                <ion-icon name="log-out-outline"></ion-icon>
-                <ion-label class="ion-padding-start" (click)="sair()">Sair</ion-label>
-            </ion-item>
-        </ion-list>
-    </ion-content>
-</ion-menu>
+
+

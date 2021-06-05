@@ -24,7 +24,8 @@ import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
 import { AlertService } from '../alert.service';
 import { switchMap } from 'rxjs/operators';
-
+//animação
+import { createAnimation, Animation } from '@ionic/core';
 
 @Component({
   selector: 'app-profile',
@@ -36,7 +37,9 @@ export class ProfilePage implements OnInit {
   public nCols: 3 | 1;
   public userPosts: Observable<any>;
   public users: Observable<any>;
-
+  //
+  allUsers: Observable<any[]>;
+  skeleton: boolean = true;
 
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;
@@ -44,6 +47,14 @@ export class ProfilePage implements OnInit {
   constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, public router: Router, private aRoute: ActivatedRoute, private menu: MenuController, private alert: AlertService) {
     const users = this.afStore.collection<any>(`users/`);
     this.users = users.valueChanges();
+    this.skeleton = true;
+    this.aRoute.params.subscribe(async () => {
+      this.skeleton = true;
+      const users = this.afStore.collection<any>('users/');
+      this.allUsers = users.valueChanges();
+      await this.delay(1000);
+      this.skeleton = false;
+    });
   }
 
   ionViewWillEnter() {

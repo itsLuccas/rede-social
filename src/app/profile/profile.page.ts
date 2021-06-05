@@ -36,9 +36,8 @@ export class ProfilePage implements OnInit {
 
   public nCols: 3 | 1;
   public userPosts: Observable<any>;
-  public users: Observable<any>;
+  public allUsers: Observable<any[]>;
   //
-  allUsers: Observable<any[]>;
   skeleton: boolean = true;
 
   // view child para ver as ids do css
@@ -46,15 +45,7 @@ export class ProfilePage implements OnInit {
 
   constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, public router: Router, private aRoute: ActivatedRoute, private menu: MenuController, private alert: AlertService) {
     const users = this.afStore.collection<any>(`users/`);
-    this.users = users.valueChanges();
-    this.skeleton = true;
-    this.aRoute.params.subscribe(async () => {
-      this.skeleton = true;
-      const users = this.afStore.collection<any>('users/');
-      this.allUsers = users.valueChanges();
-      await this.delay(1000);
-      this.skeleton = false;
-    });
+    this.allUsers = users.valueChanges();
   }
 
   ionViewWillEnter() {
@@ -62,6 +53,9 @@ export class ProfilePage implements OnInit {
   }
 
   async accessDoc() {
+    this.skeleton = true;      
+    await this.delay(1000);
+    this.skeleton = false;
     // pegando os posts do usuário logado!    
     const posts = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
     //const posts = this.afStore.doc(`users/${await this.storage.get('id')}`).get();

@@ -32,6 +32,7 @@ import { AlertService } from '../alert.service';
 export class RegisterPage implements OnInit {
 
   username: string = "";
+  loginName: string = "";
   password: string = "";
   cpassword: string = "";
   peso: number;
@@ -51,21 +52,21 @@ export class RegisterPage implements OnInit {
   }
 
   async signup() {
-    const { username, password, cpassword, peso, litrosDia = peso * 0.035 } = this;
+    const { username, loginName, password, cpassword, peso, litrosDia = peso * 0.035 } = this;
 
     if (password !== cpassword) {
       this.alert.error('Senhas não coincidem!');
       return console.error("Passwords don't match!");
     }
 
-    if (peso === undefined || username === undefined || password === undefined || cpassword === undefined) {
+    if (peso === undefined || loginName === undefined || username === undefined || password === undefined || cpassword === undefined) {
       this.alert.error('Por favor, preencha todos os campos.');
       return console.error("Peso erro!!!!!");
     }
 
     try {
       // uso da variável afAuth que permite a autenticação do usuário
-      const res = await this.afAuth.createUserWithEmailAndPassword(username + '@luccas.com', password);
+      const res = await this.afAuth.createUserWithEmailAndPassword(loginName + '@luccas.com', password);
 
       // estamos criando um documento no banco de dados, que possui a coleção de usuários através da utilização do .doc (acessa o documento) e do .set (seta o usuário conforme o id)
       this.afStore.doc(`/users/${res.user.uid}`).set({

@@ -75,3 +75,79 @@
     color: grey;
 }
 
+.animate-skeleton-background {
+    -webkit-animation: infinite bgcolorchange 1s;
+    animation: 1s infinite bgcolorchange;
+    opacity: 0.5;
+   }
+   @keyframes bgcolorchange {
+    0% {
+        background: #73F2BC;
+        }
+        10% {
+            background: #73F2BC;
+            }
+            20% {
+                background: #036E60;
+                }
+                30% {
+                    background: #22F7CA;
+                    }
+                    40% {
+                        background: #22F7CA;
+                        }
+                        50% {
+                            background: #73F2BC;
+                            }
+                            60% {
+                                background: #22F7CA;
+                                }
+                                70% {
+                                    background: #73F2BC;
+                                    }
+                                    80% {
+                                        background: #036E60;
+                                        }
+                                        90% {
+                                            background: #22F7CA;
+                                            }
+                                            100% {
+                                                background: #FFFFFF;
+                                                }
+    }
+    
+    @-webkit-keyframes bgcolorchange {
+        0% {
+            background: #73F2BC;
+            }
+            10% {
+                background: #73F2BC;
+                }
+                20% {
+                    background: #036E60;
+                    }
+                    30% {
+                        background: #22F7CA;
+                        }
+                        40% {
+                            background: #22F7CA;
+                            }
+                            50% {
+                                background: #73F2BC;
+                                }
+                                60% {
+                                    background: #22F7CA;
+                                    }
+                                    70% {
+                                        background: #73F2BC;
+                                        }
+                                        80% {
+                                            background: #036E60;
+                                            }
+                                            90% {
+                                                background: #22F7CA;
+                                                }
+                                                100% {
+                                                    background: #FFFFFF;
+                                                    }
+        }

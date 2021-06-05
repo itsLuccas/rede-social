@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Amigos</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="tabs/profile"
+        text="Voltar"
+      ></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="image" *ngFor="let user of (allUsers | async); let i = index">
+    <div *ngIf="user.username != ($user | async)?.username">
+      <ion-card>
+        <div>
+          <ion-row>
+            <ion-avatar id="avatar">
+              <img
+                src="https://ucarecdn.com/{{ user.avatar }}/-/scale_crop/350x350/center/"
+              />
+            </ion-avatar>
+          </ion-row>
+          <ion-row>
+            <p class="username">{{ user.username }}</p>
+          </ion-row>
+        </div>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

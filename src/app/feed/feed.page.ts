@@ -8,7 +8,7 @@ import { UserService } from '../user.service';
 
 import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs';
-
+import { createAnimation, Animation } from '@ionic/core';
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.page.html',

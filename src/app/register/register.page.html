@@ -2,7 +2,7 @@
     <ion-toolbar>
         <ion-title>Registro</ion-title>
         <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
+            <ion-back-button text="Voltar"></ion-back-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
@@ -10,8 +10,13 @@
 <ion-content>
     <ion-list class="body">
         <ion-item>
-            <ion-label position="floating">Nome de usuário</ion-label>
+            <ion-label position="floating">Como devemos te chamar?</ion-label>
             <ion-input [(ngModel)]="username"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Nome de usuário</ion-label>
+            <ion-input [(ngModel)]="loginName"></ion-input>
         </ion-item>
 
         <ion-item>

@@ -23,7 +23,7 @@ import { Storage } from '@ionic/storage';
 export class LoginPage implements OnInit {
 
   
-  username: string = "";
+  loginName: string = "";
   password: string = "";
   peso: number;
 
@@ -37,21 +37,18 @@ export class LoginPage implements OnInit {
   // Preciso descobrir o que significa esse assíncrono!!!!
   async login() {
 
-    const { username, password, peso } = this
+    const { loginName, password, peso } = this
     
     try {
       // Mandando a famosa gambiarra, pq o login é feito com email!!!!
       // const "result"
       //res recebe um objeto que possui a propriedade .user como resposta do serviço do firebase, por isso é possível acessar .user no if seguinte
-      const res = await this.afAuth.signInWithEmailAndPassword(username + '@luccas.com', password);
+      const res = await this.afAuth.signInWithEmailAndPassword(loginName + '@luccas.com', password);
+     
 
       //Se um usuário existir, então entramos no if e setamos um usuário
       if(res.user) {
-        this.user.setUser({
-          username,
-          uid: res.user.uid,
-          peso                 
-        })
+        
 
 
         //Armazenando no local storage o id, para caso exista um refresh da página!
@@ -62,12 +59,14 @@ export class LoginPage implements OnInit {
           this.storage.set(`litrosHj_${res.user.uid}`, 0);
         }
         
+        
+
         //window.localStorage.removeItem('id'); 
         //window.localStorage.setItem('id', res.user.uid); 
 
       //Mostrando um alerta de sucesso!
       this.alert.success("Logado!");
-      this.username = "";
+      this.loginName = "";
       this.password = ""; 
       // Depois do login, fazemos o roteamento para a página principal 
         this.router.navigate(['/tabs/feed']);

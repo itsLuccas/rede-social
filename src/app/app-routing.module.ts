@@ -22,7 +22,15 @@ const routes: Routes = [
   {
     path: 'editar-profile',
     loadChildren: () => import('./editar-profile/editar-profile.module').then( m => m.EditarProfilePageModule)
+  },  {
+    path: 'sobre',
+    loadChildren: () => import('./sobre/sobre.module').then( m => m.SobrePageModule)
+  },
+  {
+    path: 'friends',
+    loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule)
   }
+
 
 ];
 

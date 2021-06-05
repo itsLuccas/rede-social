@@ -19,15 +19,17 @@
             </ion-avatar>
         </ion-col>
         <ion-col class="ion-text-center">
-            <h4 style=" margin-bottom: 2px;">{{(userPosts | async)?.posts.length}}</h4>
+            <h4 *ngIf="(userPosts | async)?.posts" style=" margin-bottom: 2px;">{{(userPosts | async)?.posts.length}}</h4>
+            <h4 *ngIf="!(userPosts | async)?.posts" style=" margin-bottom: 2px;">0</h4>
             <p class="info-profile">Publicações</p>
         </ion-col>
-        <ion-col class="ion-text-center">
-            <h4 style=" margin-bottom: 2px;">{{(users | async)?.length}}</h4>
+        <ion-col class="ion-text-center" routerLink="/friends">
+            <h4 style=" margin-bottom: 2px;">{{(allUsers | async)?.length-1}}</h4>
             <p class="info-profile">Amigos</p>
         </ion-col>
-        <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida !== undefined" class="ion-text-center">
-            <h4 style=" margin-bottom: 2px;">{{(userPosts | async)?.aguaTotalConsumida/1000}} L</h4>
+        <ion-col class="ion-text-center">
+            <h4 *ngIf="(userPosts | async)?.aguaTotalConsumida" style=" margin-bottom: 2px;">{{(userPosts | async)?.aguaTotalConsumida/1000}} L</h4>
+            <h4 *ngIf="!(userPosts | async)?.aguaTotalConsumida" style=" margin-bottom: 2px;"> 0 L </h4>
             <p class="info-profile">Água Total</p>
         </ion-col>
     </ion-row>
@@ -101,24 +103,24 @@
         </ion-col>
         <ion-col class="ion-text-center">
             <h4 style=" margin-bottom: 2px;"><ion-skeleton-text id="skeletonitemstop" class="animate1" animated style></ion-skeleton-text></h4>
-            <p class="info-profile">Publicações</p>
+            <p class="info-profile"></p>
         </ion-col>
         <ion-col class="ion-text-center">
             <h4 style=" margin-bottom: 2px;"><ion-skeleton-text id="skeletonitemstop" class="animate2" animated style></ion-skeleton-text></h4>
-            <p class="info-profile">Amigos</p>
+            <p class="info-profile"></p>
         </ion-col>
         <ion-col class="ion-text-center">
             <h4 style=" margin-bottom: 2px;"><ion-skeleton-text id="skeletonitemstop" class="animate3" animated style></ion-skeleton-text></h4>
-            <p class="info-profile">Água Total</p>
+            <p class="info-profile"></p>
         </ion-col>
     </ion-row>  
 
 
      <!-- biografia -->
      <div class="ion-padding-start">
-        <b>{{(userPosts | async)?.username}}</b>
+        <b><ion-skeleton-text id="skeletonbio" class="animate-skeleton-background"></ion-skeleton-text></b>
         <div *ngIf="(userPosts | async)?.biografia !== undefined">
-            <p class="ion-no-margin">{{ (userPosts | async)?.biografia }}</p>
+            <p class="ion-no-margin"><ion-skeleton-text id="skeletonbio" class="animate-skeleton-background"></ion-skeleton-text></p>
         </div>
         <ion-skeleton-text id="skeletoneditbutton" class="animate-skeleton-background"></ion-skeleton-text>
         
@@ -127,7 +129,7 @@
     <hr class="hr">
 
     <!-- conquistas -->
-    <b class="ion-margin-start" style="margin-bottom: 0px;">Conquistas</b>
+    <b class="ion-margin-start" style="margin-bottom: 0px;"></b>
     <ion-row id="conquest">
         
             <ion-col>
@@ -201,6 +203,30 @@
 </ion-content>
 
 
+<ion-menu contentId="profile" menuId="profile-menu" side="end">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>profile</ion-title>
+        </ion-toolbar>
+    </ion-header>
 
+    <!-- menu com itens -->
+    <ion-content>
+        <ion-list>
+            <ion-item>
+                <ion-icon name="podium-outline"></ion-icon>
+                <ion-label class="ion-padding-start">Sua atividade</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-icon name="settings-outline"></ion-icon>
+                <ion-label class="ion-padding-start">Configurações</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-icon name="log-out-outline"></ion-icon>
+                <ion-label class="ion-padding-start" (click)="sair()">Sair</ion-label>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu>
 
 

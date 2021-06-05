@@ -67,34 +67,28 @@ export class EditarProfilePage implements OnInit {
   }
 
   public async salvarUsuario() {
-    if (this.username === undefined || this.username === "") {
-      this.alert.error('Campo usuário vazio!');
-    } else {
+    
       this.afStore.doc(`users/${await this.storage.get('id')}`).update({
         username: this.username,
       })
       this.username = "";
       this.alert.success('Alteração feita com sucesso!');
-    }
+      this.salvarPerfil();
   }
 
   public async salvarBiografia() {
-    if (this.biografia === undefined || this.biografia === "") {
-      this.alert.error('Campo biografia vazio!');
-    } else {
+    
       this.afStore.doc(`users/${await this.storage.get('id')}`).set({
         biografia: this.biografia,
       }, { merge: true })
       this.biografia = "";
       this.alert.success('Alteração feita com sucesso!');
-    }
+      this.salvarPerfil();
 
   }
 
   public async salvarPeso() {
-    if (this.peso === undefined || this.peso === "") {
-      this.alert.error('Campo peso vazio!');
-    } else {
+    
       this.litrosDia = this.peso * 0.035;
       this.afStore.doc(`users/${await this.storage.get('id')}`).set({
         litrosDia: this.litrosDia,
@@ -102,8 +96,22 @@ export class EditarProfilePage implements OnInit {
       }, { merge: true })
       this.peso = "";
       this.alert.success('Alteração feita com sucesso!');
-    }
+      this.salvarPerfil();
 
+  }
+
+  public async salvarPerfil() {
+    if (this.username != "" && this.username != undefined){
+      this.salvarUsuario();
+      
+    }else if(this.biografia != "" && this.biografia != undefined){
+    this.salvarBiografia();
+  
+    }else if(this.peso != "" && this.peso != undefined) {
+    this.salvarPeso();
+    
+    }
+    
   }
 
   ngOnInit() {

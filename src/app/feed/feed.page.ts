@@ -54,9 +54,14 @@ export class FeedPage implements OnInit {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  visitarPerfil(uid: string){
-    this.storage.set("idVisita", uid);
-    this.router.navigate(['friend-profile']);
+  async visitarPerfil(uid: string){
+    if(uid == await this.storage.get("id")){
+      this.router.navigate(['tabs/profile']);
+    }else{
+      this.storage.set("idVisita", uid);
+      this.router.navigate(['friend-profile']); 
+    }
+    
   }
 
   ngOnInit() {

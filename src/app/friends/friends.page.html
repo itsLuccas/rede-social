@@ -14,13 +14,13 @@
               <div>
                 
                   <ion-row>
-                      <ion-col size="2" class="ion-no-padding">
+                      <ion-col size="3" class="ion-no-padding">
                           <ion-avatar id="avatar">
                               <img src="https://ucarecdn.com/{{ user.avatar }}/-/scale_crop/350x350/center/" />
                           </ion-avatar>
                       </ion-col>
-                      <ion-col size="10">
-                        <p class="username">{{ user.username }}</p>
+                      <ion-col size="9">
+                        <p class="username" style="font-size: large; font-weight: bold;">{{ user.username }}</p>
                       </ion-col>
                       <div id="conquest" *ngIf="user.aguaTotalConsumida !== undefined">
                           <ion-col style="margin-left: 10px;" *ngIf="user.aguaTotalConsumida >= 500">

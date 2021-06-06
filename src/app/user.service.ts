@@ -101,4 +101,10 @@ export class UserService {
             }
         }
     }    
+
+    like(uid: string, qtdLike: any) {
+        this.afStore.doc(`users/${uid}`).set({
+            like: parseInt(qtdLike) + 1
+          }, { merge: true });
+    }
 }

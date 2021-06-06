@@ -1,32 +1,51 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Amigos</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button
-        defaultHref="tabs/profile"
-        text="Voltar"
-      ></ion-back-button>
-    </ion-buttons>
+      <ion-title>Amigos</ion-title>
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="tabs/profile"></ion-back-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="image" *ngFor="let user of (allUsers | async); let i = index">
-    <div *ngIf="user.username != ($user | async)?.username">
-      <ion-card>
-        <div>
-          <ion-row>
-            <ion-avatar id="avatar">
-              <img
-                src="https://ucarecdn.com/{{ user.avatar }}/-/scale_crop/350x350/center/"
-              />
-            </ion-avatar>
-          </ion-row>
-          <ion-row>
-            <p class="username">{{ user.username }}</p>
-          </ion-row>
-        </div>
-      </ion-card>
-    </div>
+  <div class="image" *ngFor="let user of ($users | async); let i = index">
+      <div *ngIf="user.username != ($user | async)?.username">
+          <ion-card style="padding-bottom: 10px;">
+              <div>
+                
+                  <ion-row>
+                      <ion-col size="2" class="ion-no-padding">
+                          <ion-avatar id="avatar">
+                              <img src="https://ucarecdn.com/{{ user.avatar }}/-/scale_crop/350x350/center/" />
+                          </ion-avatar>
+                      </ion-col>
+                      <ion-col size="10">
+                        <p class="username">{{ user.username }}</p>
+                      </ion-col>
+                      <div id="conquest" *ngIf="user.aguaTotalConsumida !== undefined">
+                          <ion-col style="margin-left: 10px;" *ngIf="user.aguaTotalConsumida >= 500">
+                              <img style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/a/ab/131Lapras.png/240px-131Lapras.png" width="40" height="40" />
+                          </ion-col>
+                          <ion-col *ngIf="user.aguaTotalConsumida >= 1000">
+                              <img style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/d/df/158Totodile.png/240px-158Totodile.png" width="40" height="40" />
+                          </ion-col>
+                          <ion-col *ngIf="user.aguaTotalConsumida >= 1500">
+                              <img style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/c/c7/087Dewgong.png/240px-087Dewgong.png" width="40" height="40" />
+                          </ion-col>
+                          <ion-col *ngIf="user.aguaTotalConsumida >= 2000">
+                              <img style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/f/fd/134Vaporeon.png/240px-134Vaporeon.png" width="40" height="40" />
+                          </ion-col>
+                          <ion-col *ngIf="user.aguaTotalConsumida >= 2500">
+                              <img style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/b/bf/419Floatzel.png/240px-419Floatzel.png" width="40" height="40" />
+                          </ion-col>
+                          <ion-col *ngIf="user.aguaTotalConsumida >= 3000">
+                              <img style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/b/b5/503Samurott.png/240px-503Samurott.png" width="40" height="40" />
+                          </ion-col>
+                      </div>
+                  </ion-row>
+                  
+              </div>
+          </ion-card>
+      </div>
   </div>
 </ion-content>

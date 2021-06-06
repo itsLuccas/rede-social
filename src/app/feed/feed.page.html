@@ -21,7 +21,8 @@
                                 <ion-col>
                                     <ion-icon id="ellipsis" name="ellipsis-horizontal-sharp"></ion-icon>
                                     <p class="username"> {{ user.username }} </p>
-                                    <p *ngIf="user.posts[user.posts.length-1].date" class="post-date">{{user.posts[user.posts.length-1].date }} •</p>
+                                    <p *ngIf="user.posts[user.posts.length-1].date" class="post-date">
+                                        {{user.posts[user.posts.length-1].date }} •</p>
                                     <ion-icon id="globe" name="planet-outline"></ion-icon>
                                 </ion-col>
 
@@ -31,29 +32,27 @@
                         <hr class="hr">
                         <div class="user-desc">
                             <p *ngIf="user.posts">{{ user.posts[user.posts.length-1].desc }}</p>
-                        </div>
-                        <ion-img *ngIf="user.posts" src="https://ucarecdn.com/{{ user.posts[user.posts.length-1].imagem }}/-/resize/400x/">
+                        </div>                        
+                        <ion-img *ngIf="user.posts"
+                            src="https://ucarecdn.com/{{ user.posts[user.posts.length-1].imagem }}/-/resize/400x/">
                         </ion-img>
                         <ion-row>
 
                             <ion-col size="1">
-                                <ion-avatar class="reactions" id="first-reaction">
-                                    <img src="https://img.icons8.com/cotton/64/ffffff/thumb-up--v1.png" />
-                                </ion-avatar>
-                            </ion-col>
-
-                            <ion-col size="1">
                                 <ion-avatar class="reactions">
-                                    <img src="https://img.icons8.com/cotton/64/ffffff/smiling-face-with-hearts-icon.png" />
+                                    <img src="https://img.icons8.com/color/48/000000/star-pokemon.png" />
                                 </ion-avatar>
                             </ion-col>
 
+                            
                             <ion-col size="6">
-                                <p class="reactions-data">{{i + 1}} reações</p>
+                                <p *ngIf="user.like" class="reactions-data">{{user.like}} Estrelas</p>
+                                <p *ngIf="!user.like" class="reactions-data">0 Likes</p>
                             </ion-col>
 
                             <ion-col size="4" (click)="showComments(i)">
-                                <p class="reactions-data" *ngIf="user.comentarios">{{user.comentarios.length}} Comentários</p>
+                                <p class="reactions-data" *ngIf="user.comentarios">{{user.comentarios.length}}
+                                    Comentários</p>
                                 <p class="reactions-data" *ngIf="!user.comentarios">0 Comentários</p>
                             </ion-col>
 
@@ -62,15 +61,19 @@
 
                         <ion-row>
                             <ion-col size="6">
-                                <ion-button class="button-reaction-comment" expand="block" fill="clear">
-                                    <img src="https://img.icons8.com/cotton/25/ffffff/thumb-up--v1.png" />
-                                    <p class="like-subtitle">Curtir</p>
+                                <input #like [value]="user.like" type="hidden" />
+                                <ion-button class="button-reaction-comment" expand="block" fill="clear"
+                                    (click)="giveLike(user.uid, like.value)">
+                                    <img width="30px" height="30px"
+                                        src="https://img.icons8.com/color/48/000000/star-pokemon.png" />
+                                    <p class="like-subtitle">Swift</p>
                                 </ion-button>
                             </ion-col>
                             <ion-col size="6">
                                 <input #avatar [value]="($user | async)?.avatar" type="hidden" />
                                 <input #username [value]="($user | async)?.username" type="hidden" />
-                                <ion-button class="button-reaction-comment" expand="block" fill="clear" (click)="comentar(user.uid, avatar.value, username.value)">
+                                <ion-button class="button-reaction-comment" expand="block" fill="clear"
+                                    (click)="comentar(user.uid, avatar.value, username.value)">
                                     <img src="https://img.icons8.com/office/20/ffffff/comments.png" />
                                     <p class="like-subtitle">Comentar</p>
                                 </ion-button>
@@ -83,7 +86,8 @@
                             <div *ngIf="user.comentarios.length>0">
                                 <div *ngFor="let comentario of user.comentarios">
                                     <ion-avatar style="margin-left: 10px;" id="avatar">
-                                        <img src="https://ucarecdn.com/{{ comentario.avatar }}/-/scale_crop/350x350/center/">
+                                        <img
+                                            src="https://ucarecdn.com/{{ comentario.avatar }}/-/scale_crop/350x350/center/">
                                     </ion-avatar>
                                     <p style="margin-left: 10px; font-weight: bold;">{{comentario.username}}:</p>
                                     <p style="margin-left: 20px;">{{comentario.desc}}</p>
@@ -94,10 +98,13 @@
                     </div>
                     <div *ngIf="skeleton == true">
                         <div class="ion-padding custom-skeleton">
-                            <ion-skeleton-text class="animate-skeleton-background" animated style="width: 50px; height: 50px;"></ion-skeleton-text>
+                            <ion-skeleton-text class="animate-skeleton-background" animated
+                                style="width: 50px; height: 50px;"></ion-skeleton-text>
                             <ion-skeleton-text class="animate-skeleton-background" animated></ion-skeleton-text>
-                            <ion-skeleton-text class="animate-skeleton-background" animated style="width: 100%; height: 350px;"></ion-skeleton-text>
-                            <ion-skeleton-text class="animate-skeleton-background" animated style="width: 100%;"></ion-skeleton-text>
+                            <ion-skeleton-text class="animate-skeleton-background" animated
+                                style="width: 100%; height: 350px;"></ion-skeleton-text>
+                            <ion-skeleton-text class="animate-skeleton-background" animated style="width: 100%;">
+                            </ion-skeleton-text>
                         </div>
                     </div>
 

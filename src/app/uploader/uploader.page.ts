@@ -69,9 +69,14 @@ export class UploaderPage implements OnInit {
       aguaTotalConsumida: (parseInt(aguaTotal) + this.rangeValue)
     }, { merge: true });
 
-    //Responsável por apagar os antigos comentários de algum post!
+    //Responsável por apagar os antigos comentários do último post!
     this.afStore.doc(`users/${await this.storage.get('id')}`).set({
       comentarios: ""
+    }, {merge: true});
+
+    //Responsável por apagar os antigos likes do último post!
+    this.afStore.doc(`users/${await this.storage.get('id')}`).set({
+      like: 0
     }, {merge: true});
 
     this.alert.image(`https://ucarecdn.com/${this.imageURL}/`);

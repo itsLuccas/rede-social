@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertService } from '../alert.service'
 import { Storage } from '@ionic/storage';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-feed',
@@ -19,9 +20,10 @@ export class FeedPage implements OnInit {
 
 
   constructor(private afStore: AngularFirestore,
-              private alert: AlertService,
-              private storage: Storage,
-              private router: Router) {
+    private alert: AlertService,
+    private storage: Storage,
+    private router: Router,
+    public user: UserService) {
   }
 
   async ionViewWillEnter() {
@@ -33,7 +35,7 @@ export class FeedPage implements OnInit {
     // Acessa apenas um usuário, o logado
     const user = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
     this.$user = user.valueChanges();
-    
+
     await this.delay(1000);
     this.skeleton = false;
   }
@@ -42,26 +44,34 @@ export class FeedPage implements OnInit {
     this.alert.input(uid, avatar, username);
   }
 
+  giveLike(uid: string, qtdLike: any) {  
+    this.alert.image("https://24.media.tumblr.com/89a8b51c087c4b7e691ee8b83e298a43/tumblr_mrbrdxQx8H1szx1oxo1_500.gif");
+    if(qtdLike === undefined || qtdLike == null || qtdLike == "undefined"){
+      qtdLike = 0;
+    }
+    this.user.like(uid, qtdLike);    
+  }
+
   showComments(i: number) {
-    if(this.flagComments[i] == true) {
+    if (this.flagComments[i] == true) {
       this.flagComments[i] = false;
     } else {
       this.flagComments[i] = true;
-    }    
+    }
   }
 
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  async visitarPerfil(uid: string){
-    if(uid == await this.storage.get("id")){
+  async visitarPerfil(uid: string) {
+    if (uid == await this.storage.get("id")) {
       this.router.navigate(['tabs/profile']);
-    }else{
+    } else {
       this.storage.set("idVisita", uid);
-      this.router.navigate(['friend-profile']); 
+      this.router.navigate(['friend-profile']);
     }
-    
+
   }
 
   ngOnInit() {

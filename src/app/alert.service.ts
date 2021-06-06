@@ -21,7 +21,11 @@ export class AlertService {
             },
             showCancelButton: true,
             confirmButtonText: 'Comentar',
+            confirmButtonColor: '#00cc00',
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: '#d33',
             showLoaderOnConfirm: true,
+            reverseButtons: true,
             preConfirm: (text) => {
                 // Setando um novo post                              
                 this.afStore.doc(`users/${uid}`).set({
@@ -36,7 +40,7 @@ export class AlertService {
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({
-                    title: "Seu post foi realizado com sucesso!",
+                    title: "Seu comentário foi realizado com sucesso!",
                     imageUrl: "https://media1.tenor.com/images/6bf658d3c1df80990a0817b417b78155/tenor.gif?itemid=10503435"
                 })
             }

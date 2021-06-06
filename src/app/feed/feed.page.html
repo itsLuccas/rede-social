@@ -6,7 +6,7 @@
 
 <ion-content>
     <div id="images">
-        <div class="image" *ngFor="let user of (allUsers | async); let i = index">
+        <div class="image" *ngFor="let user of ($users | async); let i = index">
             <ion-card *ngIf="user.posts !== undefined">
                 <div *ngIf="user.posts.length !== 0">
                     <div *ngIf="skeleton == false">

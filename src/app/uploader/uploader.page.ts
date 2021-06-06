@@ -1,35 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http'
-
-// biblioteca que permite o uso do comando stringfy
-import { stringify } from '@angular/compiler/src/util';
-
-// serviço de armazenamento importado
 import { AngularFirestore } from '@angular/fire/firestore';
-
-
-// importando a estrutura do usuário
 import { UserService } from '../user.service';
-
-//
 import { firestore } from 'firebase/app'
-
-// Importando as configurações para se executar um alerta!
-import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
-
 import { Storage } from '@ionic/storage';
-import { ActivatedRoute } from '@angular/router';
-
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
 import { AlertService } from '../alert.service';
-import { map } from 'rxjs/operators';
-
-
-
-
 
 @Component({
   selector: 'app-uploader',
@@ -38,17 +16,21 @@ import { map } from 'rxjs/operators';
 })
 export class UploaderPage implements OnInit {
 
-
   imageURL: string;
   desc: string;
-  userData: Observable<any>;
+  $user: Observable<any>;
   rangeValue: number = 0;
   aguaDia: number = 0;
 
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;
 
-  constructor(private storage: Storage, public http: HttpClient, public afStore: AngularFirestore, public user: UserService, public alert: AlertService, public datePipe: DatePipe, private aRoute: ActivatedRoute) {
+  constructor(private storage: Storage, 
+              public http: HttpClient, 
+              public afStore: AngularFirestore, 
+              public user: UserService, 
+              public alert: AlertService, 
+              public datePipe: DatePipe) {
     
   }
 
@@ -56,8 +38,8 @@ export class UploaderPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-      const fireUser = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
-      this.userData = fireUser.valueChanges();
+      const user = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
+      this.$user = user.valueChanges();
       this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);
   }
 
@@ -77,8 +59,7 @@ export class UploaderPage implements OnInit {
       desc = " ";
     }
 
-    // acessamos o documento armazenado no banco de dados a partir do id do usuário atual e...
-    // ...realizamos o update do doc com as informações de url e descrição    
+    // Setando um novo post
     this.afStore.doc(`users/${await this.storage.get('id')}`).set({
       posts: firestore.FieldValue.arrayUnion({
         imagem,
@@ -90,13 +71,16 @@ export class UploaderPage implements OnInit {
 
     this.alert.image(`https://ucarecdn.com/${this.imageURL}/`);
 
+    //Volta a imagem pra null, sendo assim o HTML volta a apresentar o botão "carregar imagem"
     this.imageURL = null;
 
     //Reponsável por armazenar a água bebida
     this.storage.set(`litrosHj_${await this.storage.get('id')}`, await this.storage.get(`litrosHj_${await this.storage.get('id')}`) + this.rangeValue);
-    await this.delay(1000);
+    
+    //Atualiza a quantidade de água bebida no HTML
     this.aguaDia = await this.storage.get(`litrosHj_${await this.storage.get('id')}`);
     
+    //Reseta a quantidade de água
     this.desc = ""
   }
 
@@ -121,10 +105,6 @@ export class UploaderPage implements OnInit {
     })
   }
 
-  delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
   uploadFile() {
     this.fileButton.nativeElement.click();
   }
@@ -142,7 +122,6 @@ export class UploaderPage implements OnInit {
     // - luccas b43fb80af5560135229d
     // - xofanna b6677f56876ab7996079
 
-    // Tenho que descobrir o que significa isso!!!!!
     this.http.post('https://upload.uploadcare.com/base/', data)
       .subscribe(event => {
         this.imageURL = JSON.parse(JSON.stringify(event)).file;

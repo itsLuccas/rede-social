@@ -7,25 +7,14 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
 
 import { Storage } from '@ionic/storage';
-
-// Importando o serviço de roteamento do próprio angular
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { HttpClient } from '@angular/common/http'
-
-
 import { firestore } from 'firebase';
-
-
-// Serve para fechar o menu, após clicar em "Sair()"
 import { MenuController } from '@ionic/angular';
-
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
 import { AlertService } from '../alert.service';
-import { switchMap } from 'rxjs/operators';
-//animação
-import { createAnimation, Animation } from '@ionic/core';
+
 
 @Component({
   selector: 'app-profile',
@@ -35,8 +24,8 @@ import { createAnimation, Animation } from '@ionic/core';
 export class ProfilePage implements OnInit {
 
   public nCols: 3 | 1;
-  public userPosts: Observable<any>;
-  public allUsers: Observable<any[]>;
+  public $user: Observable<any>;
+  public $users: Observable<any[]>;
   //
   skeleton: boolean = true;
 
@@ -45,23 +34,16 @@ export class ProfilePage implements OnInit {
 
   constructor(public http: HttpClient, private afStore: AngularFirestore, private user: UserService, private storage: Storage, public router: Router, private aRoute: ActivatedRoute, private menu: MenuController, private alert: AlertService) {
     const users = this.afStore.collection<any>(`users/`);
-    this.allUsers = users.valueChanges();
+    this.$users = users.valueChanges();
   }
 
-  ionViewWillEnter() {
-    this.accessDoc();
-  }
-
-  async accessDoc() {
+  async ionViewWillEnter() {
     this.skeleton = true;      
     await this.delay(1000);
     this.skeleton = false;
-    // pegando os posts do usuário logado!    
-    const posts = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
-    //const posts = this.afStore.doc(`users/${await this.storage.get('id')}`).get();
-    // é um observador, serve para pegar as alterações de posts quando um novo post é realizado, por isso o valueChanges()
-    // retorna o doc "posts" do usuário
-    this.userPosts = posts.valueChanges();
+       
+    const user = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);    
+    this.$user = user.valueChanges();
   }
 
   sair() {
@@ -105,8 +87,7 @@ export class ProfilePage implements OnInit {
         swalWithBootstrapButtons.fire(
           'Deletado!',
         )
-      } else if (
-        /* Read more about handling dismissals below */
+      } else if (        
         result.dismiss === Swal.DismissReason.cancel
       ) {
         swalWithBootstrapButtons.fire(
@@ -119,15 +100,12 @@ export class ProfilePage implements OnInit {
   fileChanged(event) {
     const files = event.target.files;
 
-
     // Criando uma estrutura de dados para publicar na API do uploadcare!
     const data = new FormData();
-
     data.append('file', files[0]);
     data.append('UPLOADCARE_PUB_KEY', 'b6677f56876ab7996079');
     data.append('UPLOADCARE_STORE', '1');
-
-    // Tenho que descobrir o que significa isso!!!!!
+    
     this.http.post('https://upload.uploadcare.com/base/', data)
       .subscribe(async event => {
         this.afStore.doc(`/users/${await this.storage.get('id')}`).update({

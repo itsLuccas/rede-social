@@ -9,9 +9,9 @@
 
 <ion-content class="ion-padding">
     <p style="color: #6fa3ff; font-weight: bold;" class="ion-text-center">Progresso de Ingestão de Água</p>
-    <ion-progress-bar [value]="(aguaDia/1000)/(userData | async)?.litrosDia"></ion-progress-bar>
+    <ion-progress-bar [value]="(aguaDia/1000)/($user | async)?.litrosDia"></ion-progress-bar>
 
-    <p style="color: #6fa3ff;" class="ion-text-center">{{aguaDia/1000}}L / {{(userData | async)?.litrosDia.toFixed(2)}}L</p>
+    <p style="color: #6fa3ff;" class="ion-text-center">{{aguaDia/1000}}L / {{($user | async)?.litrosDia.toFixed(2)}}L</p>
 
 
     <ion-item>
@@ -35,7 +35,7 @@
             <ion-card-content>
                 <ion-textarea placeholder="digite qualquer coisa" [(ngModel)]="desc"></ion-textarea>
                 <div>
-                    <input #myControl [value]="(userData | async)?.aguaTotalConsumida" type="hidden"/>
+                    <input #myControl [value]="($user | async)?.aguaTotalConsumida" type="hidden"/>
                     <ion-button (click)="postar(myControl.value)">POST</ion-button>
                 </div>
             </ion-card-content>

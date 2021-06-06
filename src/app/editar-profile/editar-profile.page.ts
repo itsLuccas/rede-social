@@ -18,7 +18,7 @@ import { AlertService } from '../alert.service';
 })
 export class EditarProfilePage implements OnInit {
 
-  public userPosts: Observable<any>;
+  public $user: Observable<any>;
   public username;
   public biografia;
   public peso;
@@ -27,17 +27,15 @@ export class EditarProfilePage implements OnInit {
   // view child para ver as ids do css
   @ViewChild('fileButton') fileButton;;
 
-  constructor(private afStore: AngularFirestore, private storage: Storage, private http: HttpClient, private alert: AlertService) {
-    this.accessDoc();
+  constructor(private afStore: AngularFirestore, 
+              private storage: Storage, 
+              private http: HttpClient, 
+              private alert: AlertService) {
   }
 
-  async accessDoc() {
-    // pegando os posts do usuário logado!    
-    const posts = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
-    //const posts = this.afStore.doc(`users/${await this.storage.get('id')}`).get();
-    // é um observador, serve para pegar as alterações de posts quando um novo post é realizado, por isso o valueChanges()
-    // retorna o doc "posts" do usuário
-    this.userPosts = posts.valueChanges();
+  async ionViewWillEnter() {      
+    const user = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);    
+    this.$user = user.valueChanges();
   }
 
   uploadFile() {
@@ -46,7 +44,6 @@ export class EditarProfilePage implements OnInit {
 
   fileChanged(event) {
     const files = event.target.files;
-
 
     // Criando uma estrutura de dados para publicar na API do uploadcare!
     const data = new FormData();
@@ -66,8 +63,7 @@ export class EditarProfilePage implements OnInit {
     this.alert.success('Avatar atualizado');
   }
 
-  public async salvarUsuario() {
-    
+  public async salvarUsuario() {    
       this.afStore.doc(`users/${await this.storage.get('id')}`).update({
         username: this.username,
       })
@@ -76,19 +72,16 @@ export class EditarProfilePage implements OnInit {
       this.salvarPerfil();
   }
 
-  public async salvarBiografia() {
-    
+  public async salvarBiografia() {    
       this.afStore.doc(`users/${await this.storage.get('id')}`).set({
         biografia: this.biografia,
       }, { merge: true })
       this.biografia = "";
       this.alert.success('Alteração feita com sucesso!');
       this.salvarPerfil();
-
   }
 
-  public async salvarPeso() {
-    
+  public async salvarPeso() {    
       this.litrosDia = this.peso * 0.035;
       this.afStore.doc(`users/${await this.storage.get('id')}`).set({
         litrosDia: this.litrosDia,
@@ -97,7 +90,6 @@ export class EditarProfilePage implements OnInit {
       this.peso = "";
       this.alert.success('Alteração feita com sucesso!');
       this.salvarPerfil();
-
   }
 
   public async salvarPerfil() {
@@ -108,10 +100,8 @@ export class EditarProfilePage implements OnInit {
     this.salvarBiografia();
   
     }else if(this.peso != "" && this.peso != undefined) {
-    this.salvarPeso();
-    
-    }
-    
+    this.salvarPeso();    
+    }    
   }
 
   ngOnInit() {

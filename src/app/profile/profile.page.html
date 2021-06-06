@@ -1,7 +1,7 @@
 <!-- cabeçalho -->
 <ion-header>
     <ion-toolbar>
-        <ion-title style="font-weight: bold; font-size: 20px;">{{(userPosts | async)?.username}}</ion-title>
+        <ion-title style="font-weight: bold; font-size: 20px;">{{($user | async)?.username}}</ion-title>
         <ion-buttons slot="end">
             <ion-menu-button slot="icon-only" name="menu-outline"></ion-menu-button>
         </ion-buttons>
@@ -15,30 +15,30 @@
         <ion-col style="text-align: -webkit-center;">
             <ion-avatar class="profile-avatar">
                 <input class="input-file" type="file" (change)="fileChanged($event)" #fileButton />
-                <img src="https://ucarecdn.com/{{ (userPosts | async)?.avatar }}/" (click)="uploadFile()" />
+                <img src="https://ucarecdn.com/{{ ($user | async)?.avatar }}/" (click)="uploadFile()" />
             </ion-avatar>
         </ion-col>
         <ion-col class="ion-text-center">
-            <h4 *ngIf="(userPosts | async)?.posts" style=" margin-bottom: 2px;">{{(userPosts | async)?.posts.length}}</h4>
-            <h4 *ngIf="!(userPosts | async)?.posts" style=" margin-bottom: 2px;">0</h4>
+            <h4 *ngIf="($user | async)?.posts" style=" margin-bottom: 2px;">{{($user | async)?.posts.length}}</h4>
+            <h4 *ngIf="!($user | async)?.posts" style=" margin-bottom: 2px;">0</h4>
             <p class="info-profile">Publicações</p>
         </ion-col>
         <ion-col class="ion-text-center" routerLink="/friends">
-            <h4 style=" margin-bottom: 2px;">{{(allUsers | async)?.length-1}}</h4>
+            <h4 style=" margin-bottom: 2px;">{{($users | async)?.length-1}}</h4>
             <p class="info-profile">Amigos</p>
         </ion-col>
         <ion-col class="ion-text-center">
-            <h4 *ngIf="(userPosts | async)?.aguaTotalConsumida" style=" margin-bottom: 2px;">{{(userPosts | async)?.aguaTotalConsumida/1000}} L</h4>
-            <h4 *ngIf="!(userPosts | async)?.aguaTotalConsumida" style=" margin-bottom: 2px;"> 0 L </h4>
+            <h4 *ngIf="($user | async)?.aguaTotalConsumida" style=" margin-bottom: 2px;">{{($user | async)?.aguaTotalConsumida/1000}} L</h4>
+            <h4 *ngIf="!($user | async)?.aguaTotalConsumida" style=" margin-bottom: 2px;"> 0 L </h4>
             <p class="info-profile">Água Total</p>
         </ion-col>
     </ion-row>
 
     <!-- biografia -->
     <div class="ion-padding-start">
-        <b>{{(userPosts | async)?.username}}</b>
-        <div *ngIf="(userPosts | async)?.biografia !== undefined">
-            <p class="ion-no-margin">{{ (userPosts | async)?.biografia }}</p>
+        <b>{{($user | async)?.username}}</b>
+        <div *ngIf="($user | async)?.biografia !== undefined">
+            <p class="ion-no-margin">{{ ($user | async)?.biografia }}</p>
         </div>
         <ion-button routerLink="../editar-profile" expand="block" size="small" id="btn-editar-perfil">Editar perfil
         </ion-button>
@@ -49,23 +49,23 @@
     <!-- conquistas -->
     <b class="ion-margin-start" style="margin-bottom: 0px;">Conquistas</b>
     <ion-row id="conquest" style="margin-bottom: 5px; margin-top: 5px;">
-        <div *ngIf="(userPosts | async)?.aguaTotalConsumida !== undefined">
-            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 500">
+        <div *ngIf="($user | async)?.aguaTotalConsumida !== undefined">
+            <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 500">
                 <img (click)="badge(1)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/a/ab/131Lapras.png/240px-131Lapras.png" width="50" height="50"/>
             </ion-col>
-            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 1000">
+            <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 1000">
                 <img (click)="badge(2)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/d/df/158Totodile.png/240px-158Totodile.png" width="50" height="50"/>
             </ion-col>
-            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 1500">
+            <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 1500">
                 <img (click)="badge(3)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/c/c7/087Dewgong.png/240px-087Dewgong.png" width="50" height="50"/>
             </ion-col>
-            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 2000">
+            <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 2000">
                 <img (click)="badge(4)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/f/fd/134Vaporeon.png/240px-134Vaporeon.png" width="50" height="50"/>
             </ion-col>
-            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 2500">
+            <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 2500">
                 <img (click)="badge(5)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/b/bf/419Floatzel.png/240px-419Floatzel.png" width="50" height="50"/>
             </ion-col>
-            <ion-col *ngIf="(userPosts | async)?.aguaTotalConsumida >= 3000">
+            <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 3000">
                 <img (click)="badge(6)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/b/b5/503Samurott.png/240px-503Samurott.png" width="50" height="50"/>
             </ion-col>
         </div>
@@ -85,7 +85,7 @@
 
     <!-- publicações -->
     <ion-row id="images">
-        <ion-col [size]="12/nCols" class="image" *ngFor="let post of ((userPosts | async)?.posts); let i = index">
+        <ion-col [size]="12/nCols" class="image" *ngFor="let post of (($user | async)?.posts); let i = index">
             <ion-card>
                 <ion-icon (click)="deleteImg(post.imagem, post.desc, post.date);" style="padding-left: 4px;"
                     name="close-circle"></ion-icon>
@@ -119,7 +119,7 @@
      <!-- biografia -->
      <div class="ion-padding-start">
         <b><ion-skeleton-text id="skeletonbio" class="animate-skeleton-background"></ion-skeleton-text></b>
-        <div *ngIf="(userPosts | async)?.biografia !== undefined">
+        <div *ngIf="($user | async)?.biografia !== undefined">
             <p class="ion-no-margin"><ion-skeleton-text id="skeletonbio" class="animate-skeleton-background"></ion-skeleton-text></p>
         </div>
         <ion-skeleton-text id="skeletoneditbutton" class="animate-skeleton-background"></ion-skeleton-text>

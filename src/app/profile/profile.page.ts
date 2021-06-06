@@ -38,11 +38,11 @@ export class ProfilePage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    this.skeleton = true;      
+    this.skeleton = true;
     await this.delay(1000);
     this.skeleton = false;
-       
-    const user = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);    
+
+    const user = this.afStore.doc<any>(`users/${await this.storage.get('id')}`);
     this.$user = user.valueChanges();
   }
 
@@ -62,7 +62,7 @@ export class ProfilePage implements OnInit {
   }
 
 
-  deleteImg(a: string, b: string, c: string) {
+  deleteImg(a: string, b: string, c: string, lastPost: boolean) {
     let obj
     if (c === undefined) {
       obj = {
@@ -81,13 +81,24 @@ export class ProfilePage implements OnInit {
 
     this.alert.fire(swalWithBootstrapButtons, 'Você deseja deletar esse post?', 'Sim, deletar.').then(async (result) => {
       if (result.isConfirmed) {
+        if (lastPost == true) {
+          //Responsável por apagar os antigos comentários do último post!
+          this.afStore.doc(`users/${await this.storage.get('id')}`).set({
+            comentarios: ""
+          }, { merge: true });
+
+          //Responsável por apagar os antigos likes do último post!
+          this.afStore.doc(`users/${await this.storage.get('id')}`).set({
+            like: 0
+          }, { merge: true });
+        }
         this.afStore.doc(`users/${await this.storage.get('id')}`).update({
           posts: firestore.FieldValue.arrayRemove(obj)
         });
         swalWithBootstrapButtons.fire(
           'Deletado!',
         )
-      } else if (        
+      } else if (
         result.dismiss === Swal.DismissReason.cancel
       ) {
         swalWithBootstrapButtons.fire(
@@ -105,7 +116,7 @@ export class ProfilePage implements OnInit {
     data.append('file', files[0]);
     data.append('UPLOADCARE_PUB_KEY', 'b6677f56876ab7996079');
     data.append('UPLOADCARE_STORE', '1');
-    
+
     this.http.post('https://upload.uploadcare.com/base/', data)
       .subscribe(async event => {
         this.afStore.doc(`/users/${await this.storage.get('id')}`).update({
@@ -120,8 +131,8 @@ export class ProfilePage implements OnInit {
     this.alert.zoom(`https://ucarecdn.com/${url}/`, desc);
   }
 
-  badge(pokemon: number){
-    switch(pokemon){
+  badge(pokemon: number) {
+    switch (pokemon) {
       case 1:
         this.alert.zoomBadge("https://64.media.tumblr.com/tumblr_lnd0ngA3V21qdb5zco1_500.gif", "Você consumiu 500mL. Parabéns, sua jornada acaba de começar!");
         break;

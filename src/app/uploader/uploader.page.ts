@@ -69,6 +69,11 @@ export class UploaderPage implements OnInit {
       aguaTotalConsumida: (parseInt(aguaTotal) + this.rangeValue)
     }, { merge: true });
 
+    //Responsável por apagar os antigos comentários de algum post!
+    this.afStore.doc(`users/${await this.storage.get('id')}`).set({
+      comentarios: ""
+    }, {merge: true});
+
     this.alert.image(`https://ucarecdn.com/${this.imageURL}/`);
 
     //Volta a imagem pra null, sendo assim o HTML volta a apresentar o botão "carregar imagem"

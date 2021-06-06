@@ -1,12 +1,46 @@
-// esse import permite que esse serviço, como um todo, seja injetável em outras regiões do código (outros componentes)
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { firestore } from 'firebase/app'
+import { Storage } from '@ionic/storage';
 
 @Injectable()
 // definindo a classe usuário
 export class AlertService {
-    constructor() {
+    constructor(private afStore: AngularFirestore,
+        private storage: Storage) {
 
+    }
+
+    input(uid: string, avatar: string, username: string) {
+        Swal.fire({
+            title: 'Digite seu comentário',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Comentar',
+            showLoaderOnConfirm: true,
+            preConfirm: (text) => {
+                // Setando um novo post                              
+                this.afStore.doc(`users/${uid}`).set({
+                    comentarios: firestore.FieldValue.arrayUnion({
+                        username: username,
+                        avatar: avatar,
+                        desc: text
+                    })
+                }, { merge: true });
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Seu post foi realizado com sucesso!",
+                    imageUrl: "https://media1.tenor.com/images/6bf658d3c1df80990a0817b417b78155/tenor.gif?itemid=10503435"
+                })
+            }
+        })
     }
 
     success(titulo: string) {
@@ -24,7 +58,7 @@ export class AlertService {
             title: titulo,
             backdrop: true,
             position: "center-start",
-            showConfirmButton: true,            
+            showConfirmButton: true,
             didOpen: () => {
                 Swal.hideLoading()
             }
@@ -37,7 +71,7 @@ export class AlertService {
             title: titulo,
             backdrop: true,
             position: "center-start",
-            showConfirmButton: true,            
+            showConfirmButton: true,
             didOpen: () => {
                 Swal.hideLoading()
             }
@@ -51,7 +85,7 @@ export class AlertService {
             html: conteudo,
             backdrop: true,
             position: "center-start",
-            showConfirmButton: true,            
+            showConfirmButton: true,
         })
     }
 

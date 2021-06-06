@@ -21,9 +21,7 @@
                                 <ion-col>
                                     <ion-icon id="ellipsis" name="ellipsis-horizontal-sharp"></ion-icon>
                                     <p class="username"> {{ user.username }} </p>
-
-
-                                    <p *ngIf="user.posts[user.posts.length-1].date" class="post-date">{{ user.posts[user.posts.length-1].date }} •</p>
+                                    <p *ngIf="user.posts[user.posts.length-1].date" class="post-date">{{user.posts[user.posts.length-1].date }} •</p>
                                     <ion-icon id="globe" name="planet-outline"></ion-icon>
                                 </ion-col>
 
@@ -54,8 +52,9 @@
                                 <p class="reactions-data">{{i + 1}} reações</p>
                             </ion-col>
 
-                            <ion-col size="4">
-                                <p class="reactions-data">{{i * 2 + 1}} comentários</p>
+                            <ion-col size="4" (click)="showComments(i)">
+                                <p class="reactions-data" *ngIf="user.comentarios">{{user.comentarios.length}} Comentários</p>
+                                <p class="reactions-data" *ngIf="!user.comentarios">0 Comentários</p>
                             </ion-col>
 
                         </ion-row>
@@ -69,12 +68,29 @@
                                 </ion-button>
                             </ion-col>
                             <ion-col size="6">
-                                <ion-button class="button-reaction-comment" expand="block" fill="clear">
+                                <input #avatar [value]="($user | async)?.avatar" type="hidden" />
+                                <input #username [value]="($user | async)?.username" type="hidden" />
+                                <ion-button class="button-reaction-comment" expand="block" fill="clear" (click)="comentar(user.uid, avatar.value, username.value)">
                                     <img src="https://img.icons8.com/office/20/ffffff/comments.png" />
                                     <p class="like-subtitle">Comentar</p>
                                 </ion-button>
                             </ion-col>
                         </ion-row>
+                    </div>
+                    <div *ngIf="flagComments[i]">
+                        <hr class="hr">
+                        <div *ngIf="user.comentarios">
+                            <div *ngIf="user.comentarios.length>0">
+                                <div *ngFor="let comentario of user.comentarios">
+                                    <ion-avatar style="margin-left: 10px;" id="avatar">
+                                        <img src="https://ucarecdn.com/{{ comentario.avatar }}/-/scale_crop/350x350/center/">
+                                    </ion-avatar>
+                                    <p style="margin-left: 10px; font-weight: bold;">{{comentario.username}}:</p>
+                                    <p style="margin-left: 20px;">{{comentario.desc}}</p>
+                                    <hr class="hr">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div *ngIf="skeleton == true">
                         <div class="ion-padding custom-skeleton">

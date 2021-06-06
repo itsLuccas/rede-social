@@ -31,8 +31,8 @@ export class UserService {
 
                 if (await this.storage.get(`litrosHj_${res.user.uid}`) === null) {
                     this.storage.set(`litrosHj_${res.user.uid}`, 0);
-                }
-
+                }               
+                
                 //Mostrando um alerta de sucesso!
                 this.alert.success("Logado!");
 
@@ -72,6 +72,7 @@ export class UserService {
             // estamos criando um documento no banco de dados, que possui a coleção de usuários através da utilização do .doc (acessa o documento) e do .set (seta o usuário conforme o id)
             this.afStore.doc(`/users/${res.user.uid}`).set({
                 username,
+                uid: res.user.uid,
                 //DEFAULT IMG
                 avatar: "d6bc7f8a-f012-469b-b8c6-e62d44c098b8",
                 peso,
@@ -82,10 +83,7 @@ export class UserService {
             this.storage.set('id', res.user.uid);
             if (await this.storage.get(`litrosHj_${res.user.uid}`) === null) {
                 this.storage.set(`litrosHj_${res.user.uid}`, 0);
-            }
-            //Antes estava com o local storage, deixei p/ caso de algum erro durante testes!
-            //window.localStorage.removeItem('id'); 
-            //window.localStorage.setItem('id', res.user.uid); 
+            }            
 
             //Mostrando um alerta de sucesso!
             this.alert.success('Sua conta foi criada!');

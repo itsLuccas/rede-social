@@ -1,0 +1,213 @@
+<!-- cabeçalho -->
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="tabs/feed"></ion-back-button>
+        </ion-buttons>
+        <ion-title style="font-weight: bold; font-size: 20px;">{{($user | async)?.username}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<!-- informações -->
+<ion-content id="profile" padding>
+    <div *ngIf="skeleton == false">
+        <ion-row>
+            <ion-col style="text-align: -webkit-center;">
+                <ion-avatar class="profile-avatar">
+                    <img src="https://ucarecdn.com/{{ ($user | async)?.avatar }}/" />
+                </ion-avatar>
+            </ion-col>
+            <ion-col class="ion-text-center">
+                <h4 *ngIf="($user | async)?.posts" style=" margin-bottom: 2px;">{{($user | async)?.posts.length}}</h4>
+                <h4 *ngIf="!($user | async)?.posts" style=" margin-bottom: 2px;">0</h4>
+                <p class="info-profile">Publicações</p>
+            </ion-col>
+            <ion-col class="ion-text-center" routerLink="/friends">
+                <h4 style=" margin-bottom: 2px;">{{($users | async)?.length-1}}</h4>
+                <p class="info-profile">Amigos</p>
+            </ion-col>
+            <ion-col class="ion-text-center">
+                <h4 *ngIf="($user | async)?.aguaTotalConsumida" style=" margin-bottom: 2px;">{{($user | async)?.aguaTotalConsumida/1000}} L</h4>
+                <h4 *ngIf="!($user | async)?.aguaTotalConsumida" style=" margin-bottom: 2px;"> 0 L </h4>
+                <p class="info-profile">Água Total</p>
+            </ion-col>
+        </ion-row>
+
+        <!-- biografia -->
+        <div class="ion-padding-start">
+            <b>{{($user | async)?.username}}</b>
+            <div *ngIf="($user | async)?.biografia !== undefined">
+                <p class="ion-no-margin">{{ ($user | async)?.biografia }}</p>
+            </div>
+        </div>
+
+        <hr class="hr">
+
+        <!-- conquistas -->
+        <b class="ion-margin-start" style="margin-bottom: 0px;">Conquistas</b>
+        <ion-row id="conquest" style="margin-bottom: 5px; margin-top: 5px;">
+            <div *ngIf="($user | async)?.aguaTotalConsumida !== undefined">
+                <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 500">
+                    <img (click)="badge(1)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/a/ab/131Lapras.png/240px-131Lapras.png" width="50" height="50" />
+                </ion-col>
+                <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 1000">
+                    <img (click)="badge(2)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/d/df/158Totodile.png/240px-158Totodile.png" width="50" height="50" />
+                </ion-col>
+                <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 1500">
+                    <img (click)="badge(3)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/c/c7/087Dewgong.png/240px-087Dewgong.png" width="50" height="50" />
+                </ion-col>
+                <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 2000">
+                    <img (click)="badge(4)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/f/fd/134Vaporeon.png/240px-134Vaporeon.png" width="50" height="50" />
+                </ion-col>
+                <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 2500">
+                    <img (click)="badge(5)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/b/bf/419Floatzel.png/240px-419Floatzel.png" width="50" height="50" />
+                </ion-col>
+                <ion-col *ngIf="($user | async)?.aguaTotalConsumida >= 3000">
+                    <img (click)="badge(6)" style="display:show" src="https://cdn2.bulbagarden.net/upload/thumb/b/b5/503Samurott.png/240px-503Samurott.png" width="50" height="50" />
+                </ion-col>
+            </div>
+        </ion-row>
+
+        <hr style="margin-top: 0px;" class="hr">
+
+        <!-- exibição das publicações -->
+        <ion-segment [(ngModel)]="nCols">
+            <ion-segment-button [value]="3">
+                <ion-icon name="grid"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button [value]="1">
+                <ion-icon name="square"></ion-icon>
+            </ion-segment-button>
+        </ion-segment>
+
+        <!-- publicações -->
+        <ion-row id="images">
+            <ion-col [size]="12/nCols" class="image" *ngFor="let post of (($user | async)?.posts); let i = index">
+                <ion-card>
+                    <ion-img src="https://ucarecdn.com/{{ post.imagem }}/-/scale_crop/400x400/center/" (click)="zoom(post.imagem, post.desc)"></ion-img>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+    </div>
+    <div *ngIf="skeleton == true">
+        <ion-row>
+            <ion-col>
+                <ion-skeleton-text id="skeletonavatar" class="animate-skeleton-background" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col class="ion-text-center">
+                <h4 style=" margin-bottom: 2px;">
+                    <ion-skeleton-text id="skeletonitemstop" class="animate1" animated style></ion-skeleton-text>
+                </h4>
+                <p class="info-profile"></p>
+            </ion-col>
+            <ion-col class="ion-text-center">
+                <h4 style=" margin-bottom: 2px;">
+                    <ion-skeleton-text id="skeletonitemstop" class="animate2" animated style></ion-skeleton-text>
+                </h4>
+                <p class="info-profile"></p>
+            </ion-col>
+            <ion-col class="ion-text-center">
+                <h4 style=" margin-bottom: 2px;">
+                    <ion-skeleton-text id="skeletonitemstop" class="animate3" animated style></ion-skeleton-text>
+                </h4>
+                <p class="info-profile"></p>
+            </ion-col>
+        </ion-row>
+
+
+        <!-- biografia -->
+        <div class="ion-padding-start">
+            <b><ion-skeleton-text id="skeletonbio" class="animate-skeleton-background"></ion-skeleton-text></b>
+            <div *ngIf="($user | async)?.biografia !== undefined">
+                <p class="ion-no-margin">
+                    <ion-skeleton-text id="skeletonbio" class="animate-skeleton-background"></ion-skeleton-text>
+                </p>
+            </div>
+            <ion-skeleton-text id="skeletoneditbutton" class="animate-skeleton-background"></ion-skeleton-text>
+
+        </div>
+
+        <hr class="hr">
+
+        <!-- conquistas -->
+        <b class="ion-margin-start" style="margin-bottom: 0px;"></b>
+        <ion-row id="conquest">
+
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate1" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate2" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate3" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate1" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate2" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonconquistas" class="animate3" animated style></ion-skeleton-text>
+            </ion-col>
+
+        </ion-row>
+
+        <hr style="margin-top: 0px;" class="hr">
+
+        <!-- exibição das publicações -->
+        <ion-segment>
+            <ion-segment-button>
+                <ion-icon name="grid"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button>
+                <ion-icon name="square"></ion-icon>
+            </ion-segment-button>
+        </ion-segment>
+
+        <!-- publicações -->
+        <ion-row>
+            <ion-col>
+                <ion-skeleton-text id="skeletonposts" class="animate1" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonposts" class="animate2" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonposts" class="animate3" animated style></ion-skeleton-text>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-skeleton-text id="skeletonposts" class="animate2" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonposts" class="animate2" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonposts" class="animate3" animated style></ion-skeleton-text>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-skeleton-text id="skeletonposts" class="animate3" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonposts" class="animate3" animated style></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+                <ion-skeleton-text id="skeletonposts" class="animate3" animated style></ion-skeleton-text>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>
+
+
+<ion-menu contentId="profile" menuId="profile-menu" side="end">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>profile</ion-title>
+        </ion-toolbar>
+    </ion-header>

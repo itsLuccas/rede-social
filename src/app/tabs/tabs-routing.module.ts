@@ -25,7 +25,12 @@ const routes: Routes = [
       {
         path: 'editar-profile',
         loadChildren: () => import('../editar-profile/editar-profile.module').then( m => m.EditarProfilePageModule)
+      },
+      {
+        path: 'friend-profile',
+        loadChildren: () => import('../friend-profile/friend-profile.module').then( m => m.FriendProfilePageModule)
       }
+    
     ]
   }
 ];

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-feed',
@@ -12,7 +14,7 @@ export class FeedPage implements OnInit {
   $users: Observable<any[]>;
   skeleton: boolean = true;
 
-  constructor(private afStore: AngularFirestore) {
+  constructor(private afStore: AngularFirestore, private storage: Storage, private router: Router) {
   }
 
   async ionViewWillEnter() {
@@ -25,6 +27,11 @@ export class FeedPage implements OnInit {
 
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  visitarPerfil(uid: string){
+    this.storage.set("idVisita", uid);
+    this.router.navigate(['friend-profile']);
   }
 
   ngOnInit() {

@@ -14,6 +14,5 @@ export class TabsPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    setTimeout(() => { this.tabs.select('feed') }, 1500)
   }
 }

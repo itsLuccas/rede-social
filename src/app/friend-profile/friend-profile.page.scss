@@ -1,0 +1,432 @@
+#images {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image {
+    width: 33%;
+}
+
+#avatar {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 30px !important; //any size
+    max-height: 30px !important; //any size
+    padding-left: 5px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 75px;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.info-profile {
+    margin-top: 0px;
+}
+
+.hr {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 96%;
+    background-color: gray;
+    height: 1px;
+}
+
+#conquest {
+    margin-left: 9px;
+}
+
+.ion-no-margin {
+    margin-top: 10px;
+}
+
+p,
+h4 {
+    color: rgb(84, 84, 84);
+}
+
+.input-file {
+    display: none;
+}
+
+#icone-alteracao {
+    margin-left: 7px;
+    margin-top: 1px;
+}
+
+#btn-editar-perfil {
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    --background: #6fa3ff;
+    --border-width: 20px;
+    --border-color: black;
+    color: white;
+    text-transform: none;
+}
+
+#skeletonavatar {
+    width: 70px;
+    height: 70px;
+    margin-top: 4px;
+    margin-left: 6px;
+    margin-bottom: 1px;
+    --border-radius: 50px;
+}
+
+#skeletoneditbutton {
+    margin-right: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 337px;
+    height: 27px;
+    --border-radius: 5px;
+}
+
+#skeletonbio {
+    margin-right: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 337px;
+    height: 12px;
+    --border-radius: 5px;
+}
+
+#skeletonitemstop {
+    width: 23px;
+    height: 23px;
+    margin-left: 30px;
+    --border-radius: 5px;
+}
+
+#skeletonconquistas {
+    width: 50px;
+    height: 50px;
+    --border-radius: 25px;
+}
+
+#skeletonposts {
+    width: 75px;
+    height: 90px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    --border-radius: 5px;
+}
+
+.animate-skeleton-background {
+    -webkit-animation: infinite bgcolorchange 1s;
+    animation: 1s infinite bgcolorchange;
+    opacity: 0.5;
+}
+
+@keyframes bgcolorchange {
+    0% {
+        background: #73F2BC;
+    }
+    10% {
+        background: #73F2BC;
+    }
+    20% {
+        background: #22F7CA;
+    }
+    30% {
+        background: #22F7CA;
+    }
+    40% {
+        background: #036E60;
+    }
+    50% {
+        background: #036E60;
+    }
+    60% {
+        background: #22F7CA;
+    }
+    70% {
+        background: #22F7CA;
+    }
+    80% {
+        background: #73F2BC;
+    }
+    90% {
+        background: #73F2BC;
+    }
+    100% {
+        background: #FFFFFF;
+    }
+}
+
+@-webkit-keyframes bgcolorchange {
+    0% {
+        background: #73F2BC;
+    }
+    10% {
+        background: #73F2BC;
+    }
+    20% {
+        background: #22F7CA;
+    }
+    30% {
+        background: #22F7CA;
+    }
+    40% {
+        background: #036E60;
+    }
+    50% {
+        background: #036E60;
+    }
+    60% {
+        background: #22F7CA;
+    }
+    70% {
+        background: #22F7CA;
+    }
+    80% {
+        background: #73F2BC;
+    }
+    90% {
+        background: #73F2BC;
+    }
+    100% {
+        background: #FFFFFF;
+    }
+}
+
+//animação posts
+.animate1 {
+    -webkit-animation: infinite bgcolorchange1 1s;
+    animation: 1s infinite bgcolorchange1;
+    opacity: 0.5;
+}
+
+@keyframes bgcolorchange1 {
+    0% {
+        background: #73F2BC;
+    }
+    10% {
+        background: #22F7CA;
+    }
+    20% {
+        background: #036E60;
+    }
+    30% {
+        background: #22F7CA;
+    }
+    40% {
+        background: #FFFFFF;
+    }
+    50% {
+        background: #73B8F2;
+    }
+    60% {
+        background: #1DAAFA;
+    }
+    70% {
+        background: #0023FF;
+    }
+    80% {
+        background: #1DAAFA;
+    }
+    90% {
+        background: #73B8F2;
+    }
+    100% {
+        background: #FFFFFF;
+    }
+}
+
+@-webkit-keyframes bgcolorchange1 {
+    0% {
+        background: #73F2BC;
+    }
+    10% {
+        background: #22F7CA;
+    }
+    20% {
+        background: #036E60;
+    }
+    30% {
+        background: #22F7CA;
+    }
+    40% {
+        background: #FFFFFF;
+    }
+    50% {
+        background: #73B8F2;
+    }
+    60% {
+        background: #1DAAFA;
+    }
+    70% {
+        background: #0023FF;
+    }
+    80% {
+        background: #1DAAFA;
+    }
+    90% {
+        background: #73B8F2;
+    }
+    100% {
+        background: #FFFFFF;
+    }
+}
+
+.animate2 {
+    -webkit-animation: infinite bgcolorchange2 1s;
+    animation: 1s infinite bgcolorchange2;
+    opacity: 0.5;
+}
+
+@keyframes bgcolorchange2 {
+    0% {
+        background: #FFFFFF;
+    }
+    10% {
+        background: #73F2BC;
+    }
+    20% {
+        background: #22F7CA;
+    }
+    30% {
+        background: #036E60;
+    }
+    40% {
+        background: #22F7CA;
+    }
+    50% {
+        background: #FFFFFF;
+    }
+    60% {
+        background: #73B8F2;
+    }
+    70% {
+        background: #1DAAFA;
+    }
+    80% {
+        background: #0023FF;
+    }
+    90% {
+        background: #1DAAFA;
+    }
+    100% {
+        background: #73B8F2;
+    }
+}
+
+@-webkit-keyframes bgcolorchange2 {
+    0% {
+        background: #FFFFFF;
+    }
+    10% {
+        background: #73F2BC;
+    }
+    20% {
+        background: #22F7CA;
+    }
+    30% {
+        background: #036E60;
+    }
+    40% {
+        background: #22F7CA;
+    }
+    50% {
+        background: #FFFFFF;
+    }
+    60% {
+        background: #73B8F2;
+    }
+    70% {
+        background: #1DAAFA;
+    }
+    80% {
+        background: #0023FF;
+    }
+    90% {
+        background: #1DAAFA;
+    }
+    100% {
+        background: #73B8F2;
+    }
+}
+
+.animate3 {
+    -webkit-animation: infinite bgcolorchange3 1s;
+    animation: 1s infinite bgcolorchange3;
+    opacity: 0.5;
+}
+
+@keyframes bgcolorchange3 {
+    0% {
+        background: #FFFFFF;
+    }
+    10% {
+        background: #FFFFFF;
+    }
+    20% {
+        background: #73F2BC;
+    }
+    30% {
+        background: #22F7CA;
+    }
+    40% {
+        background: #036E60;
+    }
+    50% {
+        background: #22F7CA;
+    }
+    60% {
+        background: #FFFFFF;
+    }
+    70% {
+        background: #73B8F2;
+    }
+    80% {
+        background: #1DAAFA;
+    }
+    90% {
+        background: #0023FF;
+    }
+    100% {
+        background: #1DAAFA;
+    }
+}
+
+@-webkit-keyframes bgcolorchange3 {
+    0% {
+        background: #FFFFFF;
+    }
+    10% {
+        background: #FFFFFF;
+    }
+    20% {
+        background: #73F2BC;
+    }
+    30% {
+        background: #22F7CA;
+    }
+    40% {
+        background: #036E60;
+    }
+    50% {
+        background: #22F7CA;
+    }
+    60% {
+        background: #FFFFFF;
+    }
+    70% {
+        background: #73B8F2;
+    }
+    80% {
+        background: #1DAAFA;
+    }
+    90% {
+        background: #0023FF;
+    }
+    100% {
+        background: #1DAAFA;
+    }
+}

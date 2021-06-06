@@ -1,9 +1,50 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>sobre</ion-title>
+      <ion-title>Sobre</ion-title>
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="/login" text="Voltar"></ion-back-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-button expand="block" (click)="oqueClick()">
+    <span>O que é o WaterBuddy?</span>
+    <ion-icon id="tutorialIcon" name="caret-down-circle-outline" slot="end"></ion-icon>
+  </ion-button>
+  
+  <ion-item id="oque" *ngIf="oqueShown">
+      <h2 class="textooque"><hr><hr>O WaterBuddy foi desenvolvido para lembrar os usuários da importância da ingestão de água no dia a dia. Sabemos como criar o hábito de beber água pode ser desafiador e por isso o WaterBuddy foi criado.<hr><hr> Incentivando os nossos usuários a criar um costume saudável e mantê-los hidratados, WaterBuddy, a rede social da água. <hr><hr><hr><hr><hr><hr><hr><hr><hr> <p style="font-weight: bold; font-size: small;">Desenvolvido em 2021.</p>
+      <hr></h2>
+  </ion-item>
+  <ion-button expand="block" (click)="quantosClick()">
+    <span>Somos quantos WaterBuddies?</span>
+    <ion-icon id="tutorialIcon" name="caret-down-circle-outline" slot="end"></ion-icon>
+  </ion-button>
+  
+  <ion-item id="oque" *ngIf="quantosShown">
+    <h2 class="textoquantos"><hr><hr>Atualmente, <hr><hr><h1 style="font-size: 50px; font-weight: bold;">{{($users | async)?.length}}</h1><hr> usuários estão conectados via WaterBuddy. <hr> O número de WaterBuddies só cresce diariamente!<hr><hr> Venha fazer parte da rede social mais hidratada de 2021.<hr>O registro é gratuito e super fácil.<hr>Bora se hidratar?</h2>
+  </ion-item>
+
+  <div>
+    <ion-icon class="slideUp" id="topTear" name="water-sharp"></ion-icon>
+    <ion-icon class="slideDown" id="bottomTear" name="water-sharp"></ion-icon>   
+  </div>
+
+
+<ion-row class="bottom">
+  <ion-col>
+    <ion-card style="margin-top: 40%; background-color: #65a2f3;"><p class="textButton"><ion-text color="light">Já tem uma conta?</ion-text></p></ion-card>
+    <ion-button expand="block" (click)="login()" class="loginButton">Faça o login.</ion-button>
+  </ion-col>
+  <ion-col>
+    <ion-card style="margin-top: 40%; background-color: #65a2f3;"><p class="textButton"><ion-text color="light">Se interessou?</ion-text></p></ion-card>
+    <ion-button expand="block" (click)="register()" class="registerButton">Registre-se.</ion-button>
+  </ion-col>
+</ion-row>
+  
+  
+
 
 </ion-content>
+

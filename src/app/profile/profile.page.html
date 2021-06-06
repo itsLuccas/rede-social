@@ -87,8 +87,8 @@
     <ion-row id="images">
         <ion-col [size]="12/nCols" class="image" *ngFor="let post of (($user | async)?.posts); let i = index">
             <ion-card>
-                <input #length [value]="($user | async)?.posts.length" type="hidden" />
-                <ion-icon (click)="deleteImg(post.imagem, post.desc, post.date, i == (length.value-1));" style="padding-left: 4px;"
+                <input #length [value]="($user | async)?.posts.length-1" type="hidden" />
+                <ion-icon (click)="deleteImg(post.imagem, post.desc, post.date, length.value, i)" style="padding-left: 4px;"
                     name="close-circle"></ion-icon>
                 <ion-img src="https://ucarecdn.com/{{ post.imagem }}/-/scale_crop/400x400/center/"
                     (click)="zoom(post.imagem, post.desc)"></ion-img>

@@ -62,7 +62,7 @@ export class ProfilePage implements OnInit {
   }
 
 
-  deleteImg(a: string, b: string, c: string, lastPost: boolean) {
+  deleteImg(a: string, b: string, c: string, index1: any, index2: number) {
     let obj
     if (c === undefined) {
       obj = {
@@ -81,7 +81,7 @@ export class ProfilePage implements OnInit {
 
     this.alert.fire(swalWithBootstrapButtons, 'Você deseja deletar esse post?', 'Sim, deletar.').then(async (result) => {
       if (result.isConfirmed) {
-        if (lastPost == true) {
+        if (parseInt(index1) === index2) {
           //Responsável por apagar os antigos comentários do último post!
           this.afStore.doc(`users/${await this.storage.get('id')}`).set({
             comentarios: ""
